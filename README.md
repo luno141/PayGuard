@@ -54,7 +54,6 @@ frontend environment file only if the API runs elsewhere.
 | `docs/04_DATA_AND_EVALUATION.md` | Synthetic data spec, labelling, metrics, test protocol |
 | `docs/05_BUILD_PLAN.md` | Phased plan, task checklist, team split, demo script |
 | `AGENTS.md` | Standing rules for the coding agent (Codex / Antigravity) |
-| `docs/06_AGENT_PROMPTS.md` | Master prompt + phase-by-phase prompts to paste into the agent |
 
 ## Quick start (target state)
 ```bash
