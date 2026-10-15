@@ -1,5 +1,5 @@
 # Presentation Slide Deck: PayGuard
-**Team Name:** billauta gand  
+**Team Name:** Billauta Gang  
 **Team / Project ID:** A132  
 **Project Title:** PayGuard — Synchronous Pre-Payment UPI Fraud Interception Engine  
 **Live URL:** [payguard-kappa.vercel.app](https://payguard-kappa.vercel.app)  
@@ -10,14 +10,14 @@
 ## Slide 1: Title & Executive Summary
 - **Main Heading:** PayGuard: Intervene Before Funds Leave Accounts
 - **Subtitle:** Sub-35ms Synchronous Pre-Payment Fraud Interception for India's UPI Ecosystem
-- **Team Name:** billauta gand
+- **Team Name:** Billauta Gang
 - **Team ID:** A132
 - **Key Badges / Callouts:**
   - ⚡ 31ms P95 Inference Latency (NPCI Target Budget: 100ms)
   - 🎯 94.2% Precision · 91.5% Recall · 1.4% FPR
   - 🛡️ 4 Hybrid ML Engines Active (LightGBM, RF, Isolation Forest, Graph LogReg)
 - **Speaker Notes:**  
-  *"Good morning judges. We are team billauta gand, ID A132. Today, India processes over 14 billion UPI transactions a month. But while payment velocity has skyrocketed, fraud has fundamentally shifted from credential theft to authorized push payment fraud. We built PayGuard: a real-time risk engine that intercepts scams at the moment of payment—before the money moves."*
+  *"Good morning judges. We are team Billauta Gang, ID A132. Today, India processes over 14 billion UPI transactions a month. But while payment velocity has skyrocketed, fraud has fundamentally shifted from credential theft to authorized push payment fraud. We built PayGuard: a real-time risk engine that intercepts scams at the moment of payment—before the money moves."*
 
 ---
 
@@ -144,7 +144,7 @@
 
 ## Slide 10: Conclusion & Thank You
 - **Heading:** PayGuard — Securing Every UPI Tap
-- **Team Name:** billauta gand
+- **Team Name:** Billauta Gang
 - **Team ID:** A132
 - **Quick Links:**
   - 🌐 **Live Web Application:** [payguard-kappa.vercel.app](https://payguard-kappa.vercel.app)
