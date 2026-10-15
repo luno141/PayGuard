@@ -36,57 +36,38 @@ import type { DashboardStats, EvaluationMetrics, ScoreResponse } from "./types";
 import "./styles.css";
 
 /* =========================================================================
-   Corporate Fintech Header & Navigation
+   Consumer App Header — Payment Simulator Only
    ========================================================================= */
 
-function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange: (tab: string) => void }) {
+function Navigation() {
   return (
     <header className="corp-nav-bar">
       <div className="nav-container">
-        <a href="#main-content" className="brand-corp-cluster" aria-label="PayGuard Enterprise Fraud Intelligence">
+        <div className="brand-corp-cluster">
           <div className="brand-corp-icon" aria-hidden="true">
             <ShieldCheck size={18} />
           </div>
           <div className="brand-titles">
-            <span className="brand-name">PayGuard Intelligence</span>
-            <span className="brand-tagline">Autonomous UPI Risk Engine</span>
+            <span className="brand-name">PayGuard</span>
+            <span className="brand-tagline">UPI Fraud Protection</span>
           </div>
-        </a>
+        </div>
 
-        <nav aria-label="Primary navigation">
-          <div className="nav-tabs-segmented" role="tablist">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "dashboard"}
-              className={`nav-tab-pill ${activeTab === "dashboard" ? "active" : ""}`}
-              onClick={() => onTabChange("dashboard")}
-            >
-              <Layers size={14} aria-hidden="true" />
-              <span>Live Dashboard</span>
-            </button>
-
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "eval"}
-              className={`nav-tab-pill ${activeTab === "eval" ? "active" : ""}`}
-              onClick={() => onTabChange("eval")}
-            >
-              <Cpu size={14} aria-hidden="true" />
-              <span>Validation Benchmark</span>
-            </button>
-          </div>
-        </nav>
+        <div className="nav-center-eyebrow">
+          <Smartphone size={13} aria-hidden="true" />
+          <span>Payment Simulator</span>
+          <span className="nav-eyebrow-sub">— Pre-PIN fraud interception demo</span>
+        </div>
 
         <div className="nav-status-pod" aria-label="Status: Risk scoring engine online">
           <span className="status-indicator-dot" aria-hidden="true" />
-          <span>Production Grid Active</span>
+          <span>Engine Online</span>
         </div>
       </div>
     </header>
   );
 }
+
 
 /* =========================================================================
    1. CONSUMER PAYMENT SIMULATOR & PRE-CONFIRMATION WARNING
@@ -1213,51 +1194,11 @@ function MetricsPage() {
   );
 }
 
-/* =========================================================================
-   SPLIT DASHBOARD — Simulator left, Analyst Console right
-   ========================================================================= */
-
-function SplitDashboard() {
-  return (
-    <div id="main-content" className="split-dashboard-shell">
-      {/* Top bar: section labels */}
-      <div className="split-header-bar">
-        <div className="split-panel-label">
-          <Smartphone size={14} className="text-cyan" aria-hidden="true" />
-          <span>Payment Simulator</span>
-          <span className="split-label-sub">Consumer UPI fraud interception</span>
-        </div>
-        <div className="split-divider-vertical" aria-hidden="true" />
-        <div className="split-panel-label">
-          <Activity size={14} className="text-cyan" aria-hidden="true" />
-          <span>Analyst Console</span>
-          <span className="split-label-sub">Risk operations &amp; alert triage</span>
-        </div>
-      </div>
-
-      {/* Main split pane */}
-      <div className="split-pane-layout">
-        <div className="split-left-pane">
-          <PaymentPage embedded />
-        </div>
-        <div className="split-right-pane">
-          <DashboardPage embedded />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
-  const [tab, setTab] = useState<string>(() => {
-    if (window.location.pathname === "/metrics") return "eval";
-    return "dashboard";
-  });
-
   return (
     <div className="app-corp-shell">
-      <Navigation activeTab={tab} onTabChange={(t) => setTab(t)} />
-      {tab === "eval" ? <MetricsPage /> : <SplitDashboard />}
+      <Navigation />
+      <PaymentPage />
     </div>
   );
 }
