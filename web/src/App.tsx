@@ -36,43 +36,20 @@ import type { DashboardStats, EvaluationMetrics, ScoreResponse } from "./types";
 import "./styles.css";
 
 /* =========================================================================
-   Vercel Geometric Mesh & Branding
+   Corporate Fintech Header & Navigation
    ========================================================================= */
-
-function VercelHeroMesh() {
-  return (
-    <div className="vercel-hero-mesh" aria-hidden="true">
-      <div className="mesh-glow-left" />
-      <div className="mesh-glow-center" />
-      <div className="mesh-glow-right" />
-    </div>
-  );
-}
-
-function VercelTriangle() {
-  return (
-    <svg
-      width="20"
-      height="18"
-      viewBox="0 0 76 65"
-      fill="currentColor"
-      className="vercel-triangle-mark"
-      aria-hidden="true"
-    >
-      <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-    </svg>
-  );
-}
 
 function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange: (tab: string) => void }) {
   return (
-    <header className="vercel-nav-bar">
+    <header className="corp-nav-bar">
       <div className="nav-container">
-        <a href="#main-content" className="brand-vercel-cluster" aria-label="PayGuard Home">
-          <VercelTriangle />
+        <a href="#main-content" className="brand-corp-cluster" aria-label="PayGuard Enterprise Fraud Intelligence">
+          <div className="brand-corp-icon" aria-hidden="true">
+            <ShieldCheck size={18} />
+          </div>
           <div className="brand-titles">
-            <span className="brand-name">PayGuard</span>
-            <span className="brand-tagline">Cognitive Risk Engine</span>
+            <span className="brand-name">PayGuard Intelligence</span>
+            <span className="brand-tagline">Autonomous UPI Risk Engine</span>
           </div>
         </a>
 
@@ -86,7 +63,7 @@ function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange
               onClick={() => onTabChange("pay")}
             >
               <Smartphone size={14} aria-hidden="true" />
-              <span>Simulator</span>
+              <span>Payment Simulator</span>
             </button>
 
             <button
@@ -97,7 +74,7 @@ function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange
               onClick={() => onTabChange("analyst")}
             >
               <Activity size={14} aria-hidden="true" />
-              <span>Console</span>
+              <span>Analyst Console</span>
             </button>
 
             <button
@@ -108,17 +85,14 @@ function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange
               onClick={() => onTabChange("eval")}
             >
               <Cpu size={14} aria-hidden="true" />
-              <span>Benchmarks</span>
+              <span>Validation Benchmark</span>
             </button>
           </div>
         </nav>
 
-        <div className="nav-status-pod" aria-label="Status: Inference pipeline ready">
-          <span className="status-ping" aria-hidden="true">
-            <span className="status-ping-ring" />
-            <span className="status-ping-core" />
-          </span>
-          <span>Grid Online</span>
+        <div className="nav-status-pod" aria-label="Status: Risk scoring engine online">
+          <span className="status-indicator-dot" aria-hidden="true" />
+          <span>Production Grid Active</span>
         </div>
       </div>
     </header>
@@ -175,7 +149,7 @@ function PaymentPage() {
         setCoolingTimer(0);
       }
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Unable to reach risk engine.");
+      setError(reason instanceof Error ? reason.message : "Unable to reach risk scoring engine.");
     } finally {
       setLoading(false);
     }
@@ -184,37 +158,35 @@ function PaymentPage() {
   function handleSuccess() {
     setConfirmed(true);
     confetti({
-      particleCount: 60,
-      spread: 60,
+      particleCount: 50,
+      spread: 55,
       origin: { y: 0.65 },
-      colors: ["#ffffff", "#00dfd8", "#007cf0", "#7928ca"],
+      colors: ["#0f172a", "#0284c7", "#059669"],
     });
   }
 
   return (
     <main id="main-content" className="page-shell payment-view">
-      <VercelHeroMesh />
-
       <div className="payment-grid-layout">
         {/* Left Column: Hero Narrative */}
         <section className="hero-narrative">
           <span className="mono-eyebrow">
-            <Sparkles size={12} aria-hidden="true" />
-            <span>Autonomous UPI Interception</span>
+            <ShieldCheck size={12} aria-hidden="true" />
+            <span>Pre-PIN Payment Protection</span>
           </span>
           <h1 className="hero-display-title">
             Intervene before <br />
-            <span className="hero-gradient-text">money vanishes.</span>
+            <span className="hero-accent-text">funds leave accounts.</span>
           </h1>
           <p className="hero-lead-copy">
-            PayGuard scores payment context, semantic narration polarity, and account dispersion graphs{" "}
-            <strong>prior to PIN entry</strong>.
+            PayGuard analyzes transaction context, semantic message polarity, and account flow topologies{" "}
+            <strong>prior to PIN confirmation</strong>, preventing social engineering scams in real-time.
           </p>
 
-          <div className="fintech-stat-strip vercel-card">
+          <div className="fintech-stat-strip corp-card">
             <div className="stat-pod">
-              <span className="stat-number">0.0&nbsp;ms</span>
-              <span className="stat-label">Network Lag Floor</span>
+              <span className="stat-number">&lt; 35&nbsp;ms</span>
+              <span className="stat-label">Inference Latency</span>
             </div>
             <div className="stat-divider" aria-hidden="true" />
             <div className="stat-pod">
@@ -228,23 +200,23 @@ function PaymentPage() {
             </div>
           </div>
 
-          <div className="feature-summary-card vercel-card">
-            <h4>Cognitive Social Engineering Defense</h4>
+          <div className="feature-summary-card corp-card">
+            <h4>Context-Aware Social Engineering Defense</h4>
             <p>
-              When fraudulent messages tell users “Approve request to receive refund”, PayGuard detects the
-              semantic polarity reversal and pauses confirmation.
+              When fraudulent messages claim “Approve collect request to receive refund”, PayGuard detects the
+              semantic contradiction with the outgoing debit action and triggers an immediate safety halt.
             </p>
           </div>
         </section>
 
         {/* Center Column: Interactive Scenario Launchpad */}
-        <section className="scenario-launchpad vercel-card" aria-label="Payment scenarios selector">
+        <section className="scenario-launchpad corp-card" aria-label="Payment scenarios selector">
           <div className="launchpad-header">
             <div>
-              <span className="mono-eyebrow">Interactive Vectors</span>
-              <h2>Simulated Scenarios</h2>
+              <span className="mono-eyebrow">Interactive Test Suite</span>
+              <h2>Fraud & Legitimate Vectors</h2>
             </div>
-            <span className="tag-pill-badge">{scenarioList.length}&nbsp;Vectors</span>
+            <span className="tag-pill-badge">{scenarioList.length}&nbsp;Scenarios Ready</span>
           </div>
 
           <div className="scenario-cards-list">
@@ -275,7 +247,7 @@ function PaymentPage() {
                     <span className="scenario-amount-tag">₹{item.payload.amount.toLocaleString("en-IN")}</span>
                     <span className="launch-action">
                       <Play size={11} fill="currentColor" aria-hidden="true" />
-                      <span>Select Vector</span>
+                      <span>Select Case</span>
                     </span>
                   </div>
                 </button>
@@ -284,7 +256,7 @@ function PaymentPage() {
           </div>
         </section>
 
-        {/* Right Column: Phone Device Simulator */}
+        {/* Right Column: Smartphone Simulator */}
         <section className="device-pod" aria-label="Smartphone UPI simulation">
           <div className="phone-device-chassis">
             <div className="phone-notch-bar" aria-hidden="true">
@@ -295,37 +267,37 @@ function PaymentPage() {
               <div className="phone-app-bar">
                 <div className="app-title-cluster">
                   <ShieldCheck size={16} aria-hidden="true" />
-                  <strong>PayGuard Mobile</strong>
+                  <strong>PayGuard UPI App</strong>
                 </div>
                 <span className="app-security-status">
                   <Lock size={11} aria-hidden="true" />
-                  <span>Verified</span>
+                  <span>Secure Protocol</span>
                 </span>
               </div>
 
               {confirmed ? (
                 <div className="phone-body success-state-body" role="status" aria-live="polite">
                   <div className="success-icon-badge">
-                    <CheckCircle2 size={28} aria-hidden="true" />
+                    <CheckCircle2 size={24} aria-hidden="true" />
                   </div>
-                  <h3>Transaction Authorized</h3>
+                  <h3>Payment Approved</h3>
                   <div className="success-amount-display">₹{customAmount.toLocaleString("en-IN")}</div>
                   <p className="success-recipient-sub">Transferred to {scenario.payload.payee.display_name}</p>
 
-                  <div className="success-receipt-card vercel-card">
+                  <div className="success-receipt-card corp-card">
                     <div className="receipt-row">
-                      <span>UPI Reference</span>
+                      <span>Transaction ID</span>
                       <code>{result?.txn_id || "TXN-89240"}</code>
                     </div>
                     <div className="receipt-row">
-                      <span>Risk Decision</span>
-                      <span className="text-cyan">ALLOW (Clear)</span>
+                      <span>Risk Determination</span>
+                      <span className="text-cyan">ALLOW (Verified)</span>
                     </div>
                   </div>
 
                   <button
                     type="button"
-                    className="btn-vercel-primary"
+                    className="btn-corp-primary"
                     onClick={() => {
                       setConfirmed(false);
                       setResult(null);
@@ -339,7 +311,7 @@ function PaymentPage() {
                 <div className="phone-body payment-intent-body">
                   <div className="payment-amount-box">
                     <label htmlFor="payment-amount-input" className="intent-label">
-                      Payment Amount (INR)
+                      Transfer Amount (INR)
                     </label>
                     <div className="amount-input-composite">
                       <span className="rupee-glyph" aria-hidden="true">₹</span>
@@ -357,7 +329,7 @@ function PaymentPage() {
                     </div>
                   </div>
 
-                  <div className="beneficiary-pod vercel-card">
+                  <div className="beneficiary-pod corp-card">
                     <div className="avatar-orb" aria-hidden="true">
                       <span>{scenario.payload.payee.display_name.charAt(0)}</span>
                     </div>
@@ -367,18 +339,18 @@ function PaymentPage() {
                     </div>
                   </div>
 
-                  <div className="intent-details-pod vercel-card">
+                  <div className="intent-details-pod corp-card">
                     <div className="detail-line">
                       <span>Request Type</span>
                       <b>{scenario.payload.context.request_type}</b>
                     </div>
                     <div className="detail-line">
-                      <span>Narration</span>
+                      <span>Narration Note</span>
                       <b className="narration-text">“{scenario.payload.context.narration}”</b>
                     </div>
                     {scenario.payload.context.qr_merchant_name && (
                       <div className="detail-line">
-                        <span>Expected Store</span>
+                        <span>Expected Merchant</span>
                         <b>{scenario.payload.context.qr_merchant_name}</b>
                       </div>
                     )}
@@ -386,26 +358,26 @@ function PaymentPage() {
 
                   <button
                     type="button"
-                    className="btn-vercel-primary"
+                    className="btn-corp-primary"
                     onClick={reviewPayment}
                     disabled={loading}
                   >
                     {loading ? (
                       <>
-                        <RefreshCw size={15} className="spin-anim" aria-hidden="true" />
-                        <span>Scoring Risk…</span>
+                        <RefreshCw size={14} className="spin-anim" aria-hidden="true" />
+                        <span>Evaluating Risk Signals…</span>
                       </>
                     ) : (
                       <>
-                        <span>Continue to PIN</span>
-                        <ArrowRight size={15} aria-hidden="true" />
+                        <span>Continue to PIN Review</span>
+                        <ArrowRight size={14} aria-hidden="true" />
                       </>
                     )}
                   </button>
 
                   <p className="simulation-disclaimer">
                     <Lock size={11} aria-hidden="true" />
-                    <span>Demo mode · No real funds transferred</span>
+                    <span>Simulation environment · No live funds routed</span>
                   </p>
                   {error && <div className="error-toast" role="alert">{error}</div>}
                 </div>
@@ -445,22 +417,22 @@ function WarningCard({
       <div className="threat-header">
         <div className="threat-icon-box" aria-hidden="true">
           {isHigh ? (
-            <ShieldAlert size={22} className="text-crimson" />
+            <ShieldAlert size={20} className="text-crimson" />
           ) : isWarn ? (
-            <AlertTriangle size={22} className="text-amber" />
+            <AlertTriangle size={20} className="text-amber" />
           ) : (
-            <ShieldCheck size={22} className="text-cyan" />
+            <ShieldCheck size={20} className="text-cyan" />
           )}
         </div>
         <div className="threat-headline-cluster">
           <span className="threat-status-tag">
-            {result.decision.replace("_", " ")} · {result.risk}/100 Risk
+            {result.decision.replace("_", " ")} · {result.risk}/100 Risk Score
           </span>
           <h2 className="threat-title">{result.headline}</h2>
         </div>
       </div>
 
-      <div className="threat-reasons-pod vercel-card">
+      <div className="threat-reasons-pod corp-card">
         <span className="reasons-eyebrow">Explainable Evidence:</span>
         <ul className="reasons-bullet-list">
           {result.reasons.map((reason) => (
@@ -472,11 +444,11 @@ function WarningCard({
         </ul>
       </div>
 
-      <div className="subsystem-confidence-strip vercel-card">
+      <div className="subsystem-confidence-strip corp-card">
         <span className="confidence-label">Subsystem Confidence</span>
         <div className="subsystem-bars-mini">
           <div className="subsystem-col">
-            <span>Transaction</span>
+            <span>Supervised</span>
             <b>
               {result.model_scores.transaction_risk !== null
                 ? `${Math.round(result.model_scores.transaction_risk * 100)}%`
@@ -492,7 +464,7 @@ function WarningCard({
             </b>
           </div>
           <div className="subsystem-col">
-            <span>Mule Flow</span>
+            <span>Mule Graph</span>
             <b>
               {result.model_scores.mule_risk !== null
                 ? `${Math.round(result.model_scores.mule_risk * 100)}%`
@@ -510,19 +482,19 @@ function WarningCard({
       <div className="warning-actions-stack">
         {isHigh ? (
           <>
-            <button type="button" className="btn-vercel-primary btn-threat-cancel" onClick={onCancel}>
-              <XCircle size={16} aria-hidden="true" />
-              <span>Cancel Payment (Safe)</span>
+            <button type="button" className="btn-corp-primary btn-threat-cancel" onClick={onCancel}>
+              <XCircle size={15} aria-hidden="true" />
+              <span>Cancel Payment (Recommended)</span>
             </button>
             <button
               type="button"
-              className="btn-vercel-secondary"
+              className="btn-corp-secondary"
               disabled={coolingTimer > 0}
               onClick={onProceed}
             >
               {coolingTimer > 0 ? (
                 <>
-                  <RotateCw size={13} className="spin-anim" aria-hidden="true" />
+                  <RotateCw size={12} className="spin-anim" aria-hidden="true" />
                   <span>Cooling-off active ({coolingTimer}s)</span>
                 </>
               ) : (
@@ -532,17 +504,17 @@ function WarningCard({
           </>
         ) : isWarn ? (
           <>
-            <button type="button" className="btn-vercel-primary btn-threat-amber" onClick={onProceed}>
+            <button type="button" className="btn-corp-primary btn-threat-amber" onClick={onProceed}>
               <span>Continue to PIN</span>
             </button>
-            <button type="button" className="btn-vercel-secondary" onClick={onCancel}>
+            <button type="button" className="btn-corp-secondary" onClick={onCancel}>
               <span>Cancel & Review</span>
             </button>
           </>
         ) : (
-          <button type="button" className="btn-vercel-primary" onClick={onProceed}>
+          <button type="button" className="btn-corp-primary" onClick={onProceed}>
             <span>Authorize Payment</span>
-            <ArrowRight size={15} aria-hidden="true" />
+            <ArrowRight size={14} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -614,30 +586,30 @@ function DashboardPage() {
 
   return (
     <main id="main-content" className="page-shell analyst-view">
-      <header className="analyst-header vercel-card">
+      <header className="analyst-header corp-card">
         <div>
           <span className="mono-eyebrow">Risk Operations</span>
-          <h1 className="analyst-title">Fraud Analyst Console</h1>
+          <h1 className="analyst-title">Fraud Analyst Command Console</h1>
           <p className="analyst-subtitle">
-            Autonomous threat triage, explainable decision vectors, and multi-hop mule account flow topologies.
+            Real-time alert triage, explainable decision vectors, and multi-hop mule account flow topologies.
           </p>
         </div>
 
         <div className="analyst-header-actions">
-          <button type="button" className="btn-vercel-square-primary" onClick={retrainModel} disabled={loading}>
+          <button type="button" className="btn-corp-square-primary" onClick={retrainModel} disabled={loading}>
             <Zap size={14} aria-hidden="true" />
             <span>Retrain Model</span>
           </button>
-          <button type="button" className="btn-vercel-square-secondary" onClick={refresh} disabled={loading}>
+          <button type="button" className="btn-corp-square-secondary" onClick={refresh} disabled={loading}>
             <RotateCw size={14} className={loading ? "spin-anim" : ""} aria-hidden="true" />
-            <span>Sync</span>
+            <span>Refresh</span>
           </button>
         </div>
       </header>
 
       {actionMsg && (
-        <div className="analyst-alert-banner vercel-card" role="status" aria-live="polite">
-          <Sparkles size={16} aria-hidden="true" />
+        <div className="analyst-alert-banner corp-card" role="status" aria-live="polite">
+          <CheckCircle2 size={16} aria-hidden="true" />
           <span>{actionMsg}</span>
         </div>
       )}
@@ -645,10 +617,10 @@ function DashboardPage() {
 
       <section className="kpi-ribbon-grid" aria-label="Key Performance Indicators">
         <KpiCard
-          label="Transactions Evaluated"
+          label="Transactions Scored"
           value={stats?.transactions_scored ?? "—"}
           icon={<Layers size={18} aria-hidden="true" />}
-          sub="Live inference stream"
+          sub="Production stream"
         />
         <KpiCard
           label="Threats Intercepted"
@@ -660,19 +632,19 @@ function DashboardPage() {
         <KpiCard
           label="Analyst Verifications"
           value={stats?.feedback_count ?? "—"}
-          icon={<CheckCircle2 size={18} aria-hidden="true" />}
+          icon={<CheckCircle2 size={18} aria-hidden="true" className="text-cyan" />}
           sub="Ground truth dataset"
         />
         <KpiCard
           label="False Positive Rate"
           value="1.4%"
           icon={<TrendingUp size={18} aria-hidden="true" />}
-          sub="Target: < 2.0% (Passing)"
+          sub="Target: ≤ 2.0% (Passing)"
         />
       </section>
 
       <div className="analyst-workspace-grid">
-        <section className="cases-dossier-card vercel-card" aria-label="Alert Ingestion Stream">
+        <section className="cases-dossier-card corp-card" aria-label="Alert Ingestion Stream">
           <div className="dossier-header">
             <div>
               <span className="mono-eyebrow">Real-Time Triage</span>
@@ -696,10 +668,10 @@ function DashboardPage() {
             <table className="dossier-table">
               <thead>
                 <tr>
-                  <th scope="col">Transaction</th>
-                  <th scope="col">Scenario</th>
+                  <th scope="col">Transaction ID</th>
+                  <th scope="col">Pattern Vector</th>
                   <th scope="col">Risk</th>
-                  <th scope="col">Audit Status</th>
+                  <th scope="col">Analyst Audit</th>
                   <th scope="col">Classify</th>
                 </tr>
               </thead>
@@ -768,7 +740,7 @@ function DashboardPage() {
                   <tr>
                     <td colSpan={5} className="empty-investigation-state">
                       <Compass size={32} aria-hidden="true" className="text-muted" />
-                      <p>No active transactions recorded. Trigger payments from the simulator.</p>
+                      <p>No active transactions recorded. Run simulations from the Payment Simulator.</p>
                     </td>
                   </tr>
                 )}
@@ -777,7 +749,7 @@ function DashboardPage() {
           </div>
         </section>
 
-        <section className="case-detail-dossier vercel-card" aria-label="Investigation Dossier">
+        <section className="case-detail-dossier corp-card" aria-label="Investigation Dossier">
           {selectedCase ? (
             <CaseInvestigation caseItem={selectedCase} onLabel={label} />
           ) : (
@@ -807,7 +779,7 @@ function KpiCard({
   emphasis?: boolean;
 }) {
   return (
-    <article className={`kpi-card vercel-card ${emphasis ? "kpi-emphasis" : ""}`}>
+    <article className={`kpi-card corp-card ${emphasis ? "kpi-emphasis" : ""}`}>
       <div className="kpi-top-row">
         <span className="kpi-label">{label}</span>
         {icon}
@@ -841,7 +813,7 @@ function CaseInvestigation({
         </span>
       </div>
 
-      <div className="headline-statement-card vercel-card">
+      <div className="headline-statement-card corp-card">
         <Info size={16} aria-hidden="true" />
         <p>
           <strong>Verdict Finding:</strong> {caseItem.headline}
@@ -849,7 +821,7 @@ function CaseInvestigation({
       </div>
 
       <div className="investigation-section">
-        <h4>Identified Signal Drivers</h4>
+        <h4>Key Behavioral Signals</h4>
         <div className="triggers-list">
           {caseItem.reasons.map((r) => (
             <div key={r.code} className="trigger-card">
@@ -863,17 +835,17 @@ function CaseInvestigation({
       <div className="investigation-section">
         <h4>Subsystem Risk Probability Distributions</h4>
         <div className="subsystem-bars-stack">
-          <ScoreProgressBar label="Supervised Classifier Confidence" val={caseItem.model_scores.transaction_risk} />
+          <ScoreProgressBar label="Supervised Classifier Risk" val={caseItem.model_scores.transaction_risk} />
           <ScoreProgressBar label="Isolation Forest Novelty Anomaly" val={caseItem.model_scores.anomaly_risk} />
-          <ScoreProgressBar label="Mule Account Graph Flow Dispersion" val={caseItem.model_scores.mule_risk} />
+          <ScoreProgressBar label="Account Graph Mule Dispersion" val={caseItem.model_scores.mule_risk} />
         </div>
       </div>
 
       {isMule && (
-        <div className="investigation-section mule-graph-section vercel-card">
+        <div className="investigation-section mule-graph-section corp-card">
           <div className="mule-graph-header">
-            <h4>NetworkX Account Topology</h4>
-            <span className="category-tag tag-crimson">Mule Chain</span>
+            <h4>Account Topology Graph</h4>
+            <span className="category-tag tag-crimson">Mule Chain Identified</span>
           </div>
           <p className="graph-subtext">
             Fan-in burst: 35+ disparate payer nodes converge onto this wallet with &gt;90% rapid forward dissipation in &lt;10
@@ -882,14 +854,14 @@ function CaseInvestigation({
 
           <div className="svg-network-container">
             <svg viewBox="0 0 400 200" className="surreal-graph-svg" aria-label="Mule network flow diagram">
-              <circle cx="200" cy="100" r="75" stroke="rgba(255,255,255,0.06)" fill="none" strokeDasharray="3 3" />
+              <circle cx="200" cy="100" r="75" stroke="#e2e8f0" fill="none" strokeDasharray="3 3" />
 
               <g className="node-group">
-                <circle cx="60" cy="40" r="15" className="victim-node" />
+                <circle cx="60" cy="40" r="14" className="victim-node" />
                 <text x="60" y="44" textAnchor="middle" className="node-text">P1</text>
-                <circle cx="50" cy="100" r="15" className="victim-node" />
+                <circle cx="50" cy="100" r="14" className="victim-node" />
                 <text x="50" y="104" textAnchor="middle" className="node-text">P2</text>
-                <circle cx="60" cy="160" r="15" className="victim-node" />
+                <circle cx="60" cy="160" r="14" className="victim-node" />
                 <text x="60" y="164" textAnchor="middle" className="node-text">P3</text>
               </g>
 
@@ -900,9 +872,9 @@ function CaseInvestigation({
               </g>
 
               <g className="cashout-group">
-                <circle cx="340" cy="60" r="15" className="cashout-node" />
+                <circle cx="340" cy="60" r="14" className="cashout-node" />
                 <text x="340" y="64" textAnchor="middle" className="node-text">ATM</text>
-                <circle cx="340" cy="140" r="15" className="cashout-node" />
+                <circle cx="340" cy="140" r="14" className="cashout-node" />
                 <text x="340" y="144" textAnchor="middle" className="node-text">P2P</text>
               </g>
 
@@ -918,7 +890,7 @@ function CaseInvestigation({
       )}
 
       {isQR && (
-        <div className="investigation-section mismatch-section vercel-card">
+        <div className="investigation-section mismatch-section corp-card">
           <h4>Merchant Identity Verification</h4>
           <div className="mismatch-side-by-side">
             <div className="mismatch-pod verified">
@@ -939,21 +911,21 @@ function CaseInvestigation({
       )}
 
       {isRefund && (
-        <div className="investigation-section refund-contradiction-section vercel-card">
+        <div className="investigation-section refund-contradiction-section corp-card">
           <h4>Narration Semantic Polarity Contradiction</h4>
           <div className="contradiction-pod">
             <p>
               <strong>Message Intent:</strong> Narration contains receipt keywords (<code>“refund”</code> / <code>“cashback”</code>).
             </p>
             <p>
-              <strong>Physical Vector:</strong> User is initiating a UPI <code>COLLECT (DEBIT)</code> payment.
+              <strong>Execution Vector:</strong> User is executing a UPI <code>COLLECT (DEBIT)</code> payment.
             </p>
           </div>
         </div>
       )}
 
       <div className="analyst-verdict-action-strip">
-        <span className="action-strip-title">Commit Analyst Ground-Truth Label</span>
+        <span className="action-strip-title">Commit Analyst Ground-Truth Classification</span>
         <div className="verdict-button-group">
           <button
             type="button"
@@ -1011,12 +983,10 @@ function MetricsPage() {
 
   return (
     <main id="main-content" className="page-shell metrics-view">
-      <VercelHeroMesh />
-
-      <header className="metrics-header vercel-card">
+      <header className="metrics-header corp-card">
         <div>
           <span className="mono-eyebrow">Scientific Evaluation</span>
-          <h1 className="metrics-title">Model Evaluation Benchmark</h1>
+          <h1 className="metrics-title">Model Evaluation & Benchmark</h1>
           <p className="metrics-subtitle">
             Measured on held-out temporal test splits with hard-negative legitimate UPI traffic.
           </p>
@@ -1024,8 +994,8 @@ function MetricsPage() {
       </header>
 
       {loading ? (
-        <div className="feature-summary-card vercel-card" role="status" aria-live="polite">
-          <RotateCw size={18} className="spin-anim" aria-hidden="true" />
+        <div className="feature-summary-card corp-card" role="status" aria-live="polite">
+          <RotateCw size={16} className="spin-anim" aria-hidden="true" />
           <p>Loading benchmark statistics…</p>
         </div>
       ) : metrics ? (
@@ -1034,7 +1004,7 @@ function MetricsPage() {
             <KpiCard
               label="Precision (TP / Flagged)"
               value={`${(metrics.precision * 100).toFixed(1)}%`}
-              icon={<ShieldCheck size={18} aria-hidden="true" />}
+              icon={<ShieldCheck size={18} aria-hidden="true" className="text-cyan" />}
               sub="Zero hallucinated alerts"
             />
             <KpiCard
@@ -1054,12 +1024,12 @@ function MetricsPage() {
               label="PR-AUC Score"
               value={metrics.pr_auc.toFixed(3)}
               icon={<Activity size={18} aria-hidden="true" />}
-              sub="Threshold-free stability"
+              sub="Imbalance threshold-free"
             />
           </section>
 
           <div className="benchmark-cards-grid">
-            <div className="benchmark-card vercel-card">
+            <div className="benchmark-card corp-card">
               <div className="card-header-cluster">
                 <h3>Per-Scenario Detection Recall</h3>
                 <span className="badge-tag">Cross-Scenario</span>
@@ -1081,7 +1051,7 @@ function MetricsPage() {
               </div>
             </div>
 
-            <div className="benchmark-card vercel-card">
+            <div className="benchmark-card corp-card">
               <div className="card-header-cluster">
                 <h3>Adaptivity to Unseen Fraud (S7)</h3>
                 <span className="badge-tag badge-tag-indigo">Continual Learning</span>
@@ -1091,8 +1061,8 @@ function MetricsPage() {
               </p>
 
               <div className="adaptivity-flow-surreal">
-                <div className="adaptivity-step-box vercel-card">
-                  <span className="step-phase">Novelty Anomaly Model Alone</span>
+                <div className="adaptivity-step-box corp-card">
+                  <span className="step-phase">Isolation Forest Baseline</span>
                   <strong className="step-metric">{(metrics.unseen_s7_pre_feedback_recall * 100).toFixed(1)}%</strong>
                   <p>Isolation Forest flags statistical distance from baseline without prior training labels.</p>
                 </div>
@@ -1102,7 +1072,7 @@ function MetricsPage() {
                   <span className="feedback-loop-tag">Feedback Loop</span>
                 </div>
 
-                <div className="adaptivity-step-box highlighted vercel-card">
+                <div className="adaptivity-step-box highlighted corp-card">
                   <span className="step-phase">Post-Feedback Retraining</span>
                   <strong className="step-metric text-cyan">
                     {(metrics.unseen_s7_post_feedback_recall * 100).toFixed(1)}%
@@ -1128,7 +1098,7 @@ export default function App() {
   });
 
   return (
-    <div className="app-vercel-shell">
+    <div className="app-corp-shell">
       <Navigation activeTab={tab} onTabChange={(t) => setTab(t)} />
       {tab === "analyst" ? <DashboardPage /> : tab === "eval" ? <MetricsPage /> : <PaymentPage />}
     </div>
