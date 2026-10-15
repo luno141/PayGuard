@@ -25,8 +25,22 @@ store = EventStore(Path("data/upiguard.db"))
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
+def health() -> dict[str, Any]:
+    from ml.serving import _get_predictor
+    predictor = _get_predictor()
+    model_loaded = predictor is not None
+    return {
+        "status": "ok",
+        "engine": "PayGuard Inference Core",
+        "models_running": model_loaded,
+        "model_version": "v1.2-lightgbm-rf-iso-graph" if model_loaded else "v1-hybrid",
+        "subsystems": {
+            "lightgbm_supervised": model_loaded,
+            "random_forest_supervised": model_loaded,
+            "isolation_forest_novelty": model_loaded,
+            "graph_topology_logreg": model_loaded,
+        },
+    }
 
 
 @app.post("/score", response_model=ScoreResponse)
