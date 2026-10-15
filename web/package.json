@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:analyst": "vite --config vite.analyst.config.ts",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.analyst.config.ts",
     "build:analyst": "vite build --config vite.analyst.config.ts"
   },
   "dependencies": {
