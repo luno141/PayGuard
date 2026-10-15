@@ -23,6 +23,7 @@ import {
   triggerRetrain,
 } from "./api";
 import type { DashboardStats, EvaluationMetrics, ScoreResponse } from "./types";
+import { PacketTransferSimulationModal } from "./components/PacketTransferSimulationModal";
 import "./styles.css";
 
 /* =========================================================================
@@ -353,6 +354,7 @@ function CaseInvestigation({
   caseItem: ScoreResponse;
   onLabel: (id: string, label: "FRAUD" | "LEGIT") => void;
 }) {
+  const [showPacketSim, setShowPacketSim] = useState(false);
   const isMule = caseItem.scenario === "mule_account" || (caseItem.model_scores.mule_risk ?? 0) >= 0.6;
   const isRefund = caseItem.scenario === "fake_refund_collect";
   const isQR = caseItem.scenario === "qr_beneficiary_mismatch";
@@ -495,7 +497,17 @@ function CaseInvestigation({
 
       {isRefund && (
         <div className="investigation-section refund-contradiction-section corp-card">
-          <h4>Narration Semantic Polarity Contradiction</h4>
+          <div className="flex items-center justify-between mb-2">
+            <h4>Narration Semantic Polarity Contradiction</h4>
+            <button
+              type="button"
+              className="btn-inspect-packet"
+              onClick={() => setShowPacketSim(true)}
+            >
+              <Activity size={13} aria-hidden="true" />
+              <span>Inspect Wire Packet Transfer</span>
+            </button>
+          </div>
           <div className="contradiction-pod">
             <p>
               <strong>Message Intent:</strong> Narration contains receipt keywords (<code>“refund”</code> / <code>“cashback”</code>).
@@ -505,6 +517,10 @@ function CaseInvestigation({
             </p>
           </div>
         </div>
+      )}
+
+      {showPacketSim && (
+        <PacketTransferSimulationModal onClose={() => setShowPacketSim(false)} />
       )}
 
       <div className="analyst-verdict-action-strip">
