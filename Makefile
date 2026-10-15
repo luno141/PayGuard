@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: setup test lint api ui analyst
+.PHONY: setup test lint api ui analyst train
 
 setup:
 	$(PYTHON) -m pip install -e '.[dev]'
@@ -10,6 +10,14 @@ test:
 
 lint:
 	$(PYTHON) -m ruff check .
+
+train:
+	$(PYTHON) ml/generate_dataset.py
+	$(PYTHON) ml/build_features.py
+	$(PYTHON) ml/train_supervised.py
+	$(PYTHON) ml/train_anomaly.py
+	$(PYTHON) ml/train_graph.py
+	$(PYTHON) ml/evaluate.py
 
 api:
 	$(PYTHON) -m uvicorn api.main:app --reload --port 8000

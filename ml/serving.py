@@ -31,13 +31,13 @@ def _get_predictor() -> Any:
 
     try:
         from models.predictor import PayGuardPredictor
-        models_dir = Path("models/models")
-        if not models_dir.exists():
-            models_dir = Path("../models/models")
-        if models_dir.exists():
-            _PREDICTOR = PayGuardPredictor(models_dir=str(models_dir))
+        # Point directly to the models directory
+        models_dir = Path(__file__).resolve().parent.parent / "models"
+        if not (models_dir / "supervised_rf.joblib").exists():
+            models_dir = Path("models")
+        _PREDICTOR = PayGuardPredictor(models_dir=str(models_dir))
     except Exception as exc:
-        print(f"Notice: Live ML models not loaded into serving adapter ({exc}). Falling back to calibrated heuristics.")
+        print(f"Notice: Live ML models from models/ not loaded ({exc}).")
         _PREDICTOR = None
 
     return _PREDICTOR

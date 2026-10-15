@@ -14,11 +14,14 @@ class PayGuardPredictor:
 
     def __init__(self, models_dir=None):
         if models_dir is None:
-            models_dir = os.path.join(os.path.dirname(__file__), 'models')
-            if not os.path.exists(models_dir):
-                models_dir = os.path.join(os.path.dirname(__file__), 'ml', 'models')
+            # Default to the directory where this predictor.py lives
+            models_dir = os.path.dirname(os.path.abspath(__file__))
+            if not os.path.exists(os.path.join(models_dir, 'supervised_rf.joblib')):
+                nested = os.path.join(models_dir, 'models')
+                if os.path.exists(nested):
+                    models_dir = nested
 
-        self.models_dir = models_dir
+        self.models_dir = str(models_dir)
         self._load_models()
 
     def _load_models(self):
