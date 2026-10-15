@@ -72,9 +72,23 @@
       }
     },
     {
-      "source": "/analyst/:path*",
+      "source": "/analyst/assets/:path*",
       "destination": {
         "service": "web"
+      }
+    },
+    {
+      "source": "/analyst",
+      "destination": {
+        "service": "web",
+        "path": "/analyst/index.html"
+      }
+    },
+    {
+      "source": "/analyst/:path*",
+      "destination": {
+        "service": "web",
+        "path": "/analyst/index.html"
       }
     },
     {
