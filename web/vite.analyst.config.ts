@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: "/analyst/",
   root: path.resolve(__dirname, "analyst"),
   publicDir: path.resolve(__dirname, "public"),
   plugins: [react()],
