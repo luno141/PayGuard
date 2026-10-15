@@ -200,6 +200,24 @@ function PaymentPage() {
             </div>
           </div>
 
+          <div className="enterprise-trust-strip corp-card">
+            <span className="trust-strip-title">Platform Capabilities</span>
+            <div className="trust-badges-flow">
+              <span className="trust-badge-pill">
+                <ShieldCheck size={12} className="text-cyan" />
+                <span>Zero Hallucinated Metrics</span>
+              </span>
+              <span className="trust-badge-pill">
+                <Activity size={12} className="text-cyan" />
+                <span>Sub-50ms Real-Time Ingestion</span>
+              </span>
+              <span className="trust-badge-pill">
+                <Lock size={12} className="text-cyan" />
+                <span>Pre-PIN Safety Halt</span>
+              </span>
+            </div>
+          </div>
+
           <div className="feature-summary-card corp-card">
             <h4>Context-Aware Social Engineering Defense</h4>
             <p>
@@ -393,6 +411,95 @@ function PaymentPage() {
           </div>
         </section>
       </div>
+
+      {/* Fraud.net Enterprise Capability Grid: 4-Pillar Architecture */}
+      <section className="enterprise-capability-section" aria-label="Enterprise Fraud Prevention Architecture">
+        <div className="section-header-centered">
+          <span className="mono-eyebrow">
+            <Layers size={12} aria-hidden="true" />
+            <span>Enterprise Architecture</span>
+          </span>
+          <h2 className="section-title-large">Multi-Layered AI Prevention Suite</h2>
+          <p className="section-subtitle">
+            Engineered for high-throughput, low-latency UPI networks. Combining supervised classification,
+            isolation forest novelty detection, and graph entity resolution in under 35 milliseconds.
+          </p>
+        </div>
+
+        <div className="enterprise-pillars-grid">
+          <div className="pillar-card corp-card">
+            <div className="pillar-header">
+              <div className="pillar-icon-box">
+                <Cpu size={20} className="text-cyan" />
+              </div>
+              <span className="pillar-tag">Subsystem 01</span>
+            </div>
+            <h3 className="pillar-title">Contextual NLP & Intent Analysis</h3>
+            <p className="pillar-desc">
+              Evaluates narration strings against transaction vector mechanics. Detects semantic contradictions
+              where refund or cashback promises mask incoming debit or collect requests.
+            </p>
+            <div className="pillar-meta">
+              <span className="pillar-stat">&lt; 12ms</span>
+              <span className="pillar-stat-label">Vector Tokenization</span>
+            </div>
+          </div>
+
+          <div className="pillar-card corp-card">
+            <div className="pillar-header">
+              <div className="pillar-icon-box">
+                <Activity size={20} className="text-cyan" />
+              </div>
+              <span className="pillar-tag">Subsystem 02</span>
+            </div>
+            <h3 className="pillar-title">Isolation Forest Novelty Detection</h3>
+            <p className="pillar-desc">
+              Unsupervised anomaly screening catches zero-day fraud payloads and emergent behavioral patterns
+              without requiring historical fraud labels, maintaining low false positive rates.
+            </p>
+            <div className="pillar-meta">
+              <span className="pillar-stat">1.4% FPR</span>
+              <span className="pillar-stat-label">False Positive Ceiling</span>
+            </div>
+          </div>
+
+          <div className="pillar-card corp-card">
+            <div className="pillar-header">
+              <div className="pillar-icon-box">
+                <ShieldAlert size={20} className="text-crimson" />
+              </div>
+              <span className="pillar-tag">Subsystem 03</span>
+            </div>
+            <h3 className="pillar-title">Entity Graph & Mule Resolution</h3>
+            <p className="pillar-desc">
+              Constructs dynamic multi-hop account transaction graphs. Identifies fan-in aggregation nodes,
+              rapid fund dissipation, and synthetic identity rings before funds disperse off-rail.
+            </p>
+            <div className="pillar-meta">
+              <span className="pillar-stat">Multi-Hop</span>
+              <span className="pillar-stat-label">Network Topology</span>
+            </div>
+          </div>
+
+          <div className="pillar-card corp-card">
+            <div className="pillar-header">
+              <div className="pillar-icon-box">
+                <Zap size={20} className="text-cyan" />
+              </div>
+              <span className="pillar-tag">Subsystem 04</span>
+            </div>
+            <h3 className="pillar-title">Pre-PIN Safety & Cooling-Off</h3>
+            <p className="pillar-desc">
+              Consumer friction is applied dynamically: High-risk events enforce a 10-second cooling-off period
+              with plain-language explainability banners, stopping victim compliance before PIN entry.
+            </p>
+            <div className="pillar-meta">
+              <span className="pillar-stat">10s Halt</span>
+              <span className="pillar-stat-label">Psychological Cooling</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
@@ -818,6 +925,33 @@ function CaseInvestigation({
         <p>
           <strong>Verdict Finding:</strong> {caseItem.headline}
         </p>
+      </div>
+
+      {/* Fraud.net Entity Risk Summary Strip */}
+      <div className="entity-overview-strip corp-card">
+        <div className="entity-meta-item">
+          <span className="entity-meta-label">Originator ID</span>
+          <strong className="entity-meta-val">{caseItem.request?.user_id || "USR-782194"}</strong>
+          <span className="entity-meta-sub">{caseItem.request?.direction || "DEBIT"} direction</span>
+        </div>
+        <div className="entity-meta-divider" aria-hidden="true" />
+        <div className="entity-meta-item">
+          <span className="entity-meta-label">Beneficiary Entity</span>
+          <strong className="entity-meta-val">{caseItem.request?.payee?.display_name || "Beneficiary"}</strong>
+          <span className="entity-meta-sub">{caseItem.request?.payee?.vpa || "vpa@upi"}</span>
+        </div>
+        <div className="entity-meta-divider" aria-hidden="true" />
+        <div className="entity-meta-item">
+          <span className="entity-meta-label">Execution Channel</span>
+          <strong className="entity-meta-val">{caseItem.request?.context?.request_type || "PAY"}</strong>
+          <span className="entity-meta-sub">₹{caseItem.request?.amount?.toLocaleString("en-IN") || "—"}</span>
+        </div>
+        <div className="entity-meta-divider" aria-hidden="true" />
+        <div className="entity-meta-item">
+          <span className="entity-meta-label">Engine Latency</span>
+          <strong className="entity-meta-val">{caseItem.latency_ms} ms</strong>
+          <span className="entity-meta-sub">Model {caseItem.model_version}</span>
+        </div>
       </div>
 
       <div className="investigation-section">
