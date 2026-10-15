@@ -2911,5 +2911,134 @@ h1, h2, h3, h4, p {
   line-height: 1.4;
 }
 
+/* =========================================================================
+   Live Telemetry Charts & Visualization Styles
+   ========================================================================= */
+
+.chart-container-box {
+  background: #f8fafc;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.svg-chart {
+  display: block;
+  overflow: visible;
+}
+
+.chart-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--hairline);
+  font-size: 11px;
+  color: var(--mute);
+}
+
+.chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--ink-heading);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.donut-chart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: #f8fafc;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 14px;
+}
+
+.donut-chart-svg {
+  transform: rotate(0deg);
+  flex-shrink: 0;
+}
+
+.donut-legend-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.legend-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.legend-title {
+  flex-grow: 1;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.mono-val {
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+}
+
+.count-sub {
+  font-size: 11px;
+  color: var(--mute);
+  font-family: var(--font-geist-mono);
+}
+
+.histogram-bars-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 14px;
+}
+
+.histogram-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.histogram-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scenario-mono-name {
+  font-family: var(--font-geist-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-heading);
+  letter-spacing: 0.3px;
+}
+
+.histogram-track {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
 
 
