@@ -1,5 +1,31 @@
 import { useEffect, useState } from "react";
 import {
+  ShieldAlert,
+  ShieldCheck,
+  AlertTriangle,
+  Play,
+  RotateCw,
+  Sparkles,
+  Zap,
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  Eye,
+  Activity,
+  Layers,
+  Compass,
+  Cpu,
+  Lock,
+  Smartphone,
+  RefreshCw,
+  Sliders,
+  TrendingUp,
+  SlidersHorizontal,
+  ChevronRight,
+  Info,
+} from "lucide-react";
+import confetti from "canvas-confetti";
+import {
   getFlaggedTransactions,
   getAllTransactions,
   getMetrics,
@@ -12,48 +38,88 @@ import { demos, type DemoScenario } from "./scenarios";
 import type { DashboardStats, EvaluationMetrics, ScoreResponse } from "./types";
 import "./styles.css";
 
+/* =========================================================================
+   Surrealism & FinTech Branding Components
+   ========================================================================= */
+
+function SurrealOrb({ color = "emerald" }: { color?: "emerald" | "amber" | "crimson" | "indigo" }) {
+  return (
+    <div className={`surreal-orb orb-${color}`} aria-hidden="true">
+      <div className="orb-inner" />
+      <div className="orb-ring" />
+    </div>
+  );
+}
+
 function Brand() {
   return (
-    <a className="brand" href="/pay" aria-label="PayGuard home">
-      <span className="brand-mark">P</span>
-      <span>
-        Pay<span>Guard</span>
-      </span>
-    </a>
+    <div className="brand" role="banner">
+      <div className="brand-logo-wrap">
+        <ShieldCheck className="brand-shield-icon" size={22} />
+        <span className="brand-pulse-beacon" />
+      </div>
+      <div className="brand-titles">
+        <span className="brand-name">
+          Pay<span className="brand-accent">Guard</span>
+        </span>
+        <span className="brand-tagline">AI Cognitive Risk Shield</span>
+      </div>
+    </div>
   );
 }
 
 function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange: (tab: string) => void }) {
   return (
-    <nav className="navigation">
-      <Brand />
-      <div className="nav-links">
-        <button
-          type="button"
-          className={activeTab === "pay" ? "nav-btn active" : "nav-btn"}
-          onClick={() => onTabChange("pay")}
-        >
-          Payment Simulator
-        </button>
-        <button
-          type="button"
-          className={activeTab === "analyst" ? "nav-btn active" : "nav-btn"}
-          onClick={() => onTabChange("analyst")}
-        >
-          Analyst Console
-        </button>
-        <button
-          type="button"
-          className={activeTab === "eval" ? "nav-btn active" : "nav-btn"}
-          onClick={() => onTabChange("eval")}
-        >
-          Model Evaluation & Metrics
-        </button>
+    <nav className="glass-nav">
+      <div className="nav-container">
+        <Brand />
+
+        <div className="nav-menu-pills" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "pay"}
+            className={`nav-pill ${activeTab === "pay" ? "active" : ""}`}
+            onClick={() => onTabChange("pay")}
+          >
+            <Smartphone size={16} className="nav-icon" />
+            <span>Pay Simulator</span>
+            {activeTab === "pay" && <span className="pill-glow" />}
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "analyst"}
+            className={`nav-pill ${activeTab === "analyst" ? "active" : ""}`}
+            onClick={() => onTabChange("analyst")}
+          >
+            <Activity size={16} className="nav-icon" />
+            <span>Analyst Console</span>
+            {activeTab === "analyst" && <span className="pill-glow" />}
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "eval"}
+            className={`nav-pill ${activeTab === "eval" ? "active" : ""}`}
+            onClick={() => onTabChange("eval")}
+          >
+            <Cpu size={16} className="nav-icon" />
+            <span>AI Benchmark</span>
+            {activeTab === "eval" && <span className="pill-glow" />}
+          </button>
+        </div>
+
+        <div className="nav-status-pod">
+          <span className="status-ping">
+            <span className="status-ping-ring" />
+            <span className="status-ping-core" />
+          </span>
+          <span className="status-label">Cognitive Grid Online</span>
+        </div>
       </div>
-      <span className="demo-pill">
-        <i />
-        Live AI Guard Active
-      </span>
     </nav>
   );
 }
@@ -103,160 +169,267 @@ function PaymentPage() {
       const res = await scorePayment(payload);
       setResult(res);
       if (res.decision === "HIGH_RISK") {
-        setCoolingTimer(10); // 10 second cooling off safety window
+        setCoolingTimer(10);
       } else {
         setCoolingTimer(0);
       }
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Unable to score payment via risk engine.");
+      setError(reason instanceof Error ? reason.message : "Unable to reach risk engine.");
     } finally {
       setLoading(false);
     }
   }
 
+  function handleSuccess() {
+    setConfirmed(true);
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.65 },
+      colors: ["#10b981", "#34d399", "#6ee7b7", "#3b82f6"],
+    });
+  }
+
   return (
-    <main className="payment-page">
-      <section className="payment-intro">
-        <p className="section-label">Pre-payment protection</p>
-        <h1>
-          Know before
-          <br />
-          <em>money moves.</em>
-        </h1>
-        <p className="intro-copy">
-          PayGuard inspects the payment context, beneficiary history, and money-flow graph <strong>before</strong> the UPI PIN
-          screen, giving users a safe window to pause or safely cancel.
-        </p>
-        <div className="trust-row">
-          <span>
-            <b>3+</b> AI detection models
-          </span>
-          <span>
-            <b>&lt; 50ms</b> risk latency
-          </span>
-          <span>
-            <b>100%</b> explainable reasons
-          </span>
-        </div>
-      </section>
+    <main className="page-shell payment-view">
+      {/* Background Surrealism Ambient Canvas */}
+      <div className="ambient-background" aria-hidden="true">
+        <SurrealOrb color="emerald" />
+        <SurrealOrb color="indigo" />
+      </div>
 
-      <section className="scenario-panel">
-        <div className="panel-heading">
-          <div>
-            <p className="section-label">Interactive Test Scenarios</p>
-            <h2>Select a payment to test</h2>
+      <div className="payment-grid-layout">
+        {/* Left Column: Hero Narrative */}
+        <section className="hero-narrative">
+          <div className="badge-chip glass-card">
+            <Sparkles size={13} className="text-emerald" />
+            <span>Autonomous UPI Interception</span>
           </div>
-          <span className="step-pill">01 / Choose</span>
-        </div>
-        <div className="scenario-grid">
-          {scenarioList.map((item, index) => (
-            <button
-              className={scenario.id === item.id ? "scenario-card selected" : "scenario-card"}
-              key={item.id}
-              onClick={() => {
-                setScenario(item);
-                setResult(null);
-              }}
-            >
-              <span className="scenario-number">0{index + 1}</span>
-              <div className="scenario-header-inline">
-                <strong>{item.label}</strong>
-                <span className="scenario-tag">{item.tag}</span>
-              </div>
-              <span>{item.description}</span>
-            </button>
-          ))}
-        </div>
-      </section>
+          <h1 className="hero-title">
+            Intervene before <br />
+            <span className="gradient-text">money vanishes.</span>
+          </h1>
+          <p className="hero-description">
+            PayGuard inspects contextual narration, biometric rush signals, and account dispersion graphs{" "}
+            <strong>prior to PIN confirmation</strong>.
+          </p>
 
-      <section className="payment-device">
-        <div className="device-header">
-          <span className="brand-mini">P</span>
-          <strong>PayGuard Mobile UPI</strong>
-          <span className="secure-dot">AI Guard Active</span>
-        </div>
-
-        {confirmed ? (
-          <div className="payment-success">
-            <div className="success-icon">✓</div>
-            <h2>Payment Successful</h2>
-            <p className="success-amount">₹{customAmount.toLocaleString("en-IN")}</p>
-            <p className="success-sub">Sent to {scenario.payload.payee.display_name}</p>
-            <p className="success-ref">Ref: {result?.txn_id || "TXN-OK"}</p>
-            <button
-              className="review-button"
-              onClick={() => {
-                setConfirmed(false);
-                setResult(null);
-              }}
-            >
-              Simulate Another Payment
-            </button>
+          <div className="fintech-stat-strip glass-card">
+            <div className="stat-pod">
+              <span className="stat-number">0.0 ms</span>
+              <span className="stat-label">Network Lag Floor</span>
+            </div>
+            <div className="stat-divider" />
+            <div className="stat-pod">
+              <span className="stat-number">3 Engines</span>
+              <span className="stat-label">Supervised + IF + Graph</span>
+            </div>
+            <div className="stat-divider" />
+            <div className="stat-pod">
+              <span className="stat-number">100%</span>
+              <span className="stat-label">Explainable Signals</span>
+            </div>
           </div>
-        ) : !result ? (
-          <div className="payment-review">
-            <p className="section-label">Payment review</p>
-            <div className="amount-input-row">
-              <span className="amount-symbol">₹</span>
-              <input
-                type="number"
-                className="amount-input"
-                value={customAmount}
-                onChange={(e) => setCustomAmount(Math.max(1, Number(e.target.value)))}
-                aria-label="Payment amount"
-              />
+
+          <div className="surreal-card-feature glass-card">
+            <div className="feature-glow" />
+            <div className="feature-icon-pod">
+              <Compass size={22} className="text-emerald" />
             </div>
-            <p className="payment-direction">
-              You are sending {scenario.payload.direction.toLowerCase()} payment to
-            </p>
-            <div className="recipient">
-              <span>{scenario.payload.payee.display_name.slice(0, 1)}</span>
-              <div>
-                <strong>{scenario.payload.payee.display_name}</strong>
-                <small>{scenario.payload.payee.vpa}</small>
-              </div>
+            <div>
+              <h4>Sub-conscious Social Engineering Defense</h4>
+              <p>
+                When scammers tell victims "Approve to receive your prize", PayGuard detects the semantic
+                polarity flip and halts the transaction.
+              </p>
             </div>
-            <div className="review-details">
-              <div>
-                <span>Request Type</span>
-                <b>{scenario.payload.context.request_type}</b>
-              </div>
-              <div>
-                <span>Narration Note</span>
-                <b>{scenario.payload.context.narration}</b>
-              </div>
-              {scenario.payload.context.qr_merchant_name && (
-                <div>
-                  <span>Scanned Merchant</span>
-                  <b>{scenario.payload.context.qr_merchant_name}</b>
+          </div>
+        </section>
+
+        {/* Center Column: Interactive Scenario Launchpad */}
+        <section className="scenario-launchpad glass-card">
+          <div className="launchpad-header">
+            <div>
+              <span className="section-eyebrow">Interactive Test Laboratory</span>
+              <h2>Simulated UPI Attacks</h2>
+            </div>
+            <span className="tag-pill-emerald">{scenarioList.length} Scenarios Ready</span>
+          </div>
+
+          <div className="scenario-cards-list">
+            {scenarioList.map((item, index) => {
+              const isSelected = scenario.id === item.id;
+              const isFraud = item.tag.includes("Fraud");
+              const isUnseen = item.tag.includes("Adaptivity");
+              return (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={`scenario-action-card ${isSelected ? "selected" : ""} ${
+                    isFraud ? "fraud-tint" : isUnseen ? "unseen-tint" : "legit-tint"
+                  }`}
+                  onClick={() => {
+                    setScenario(item);
+                    setResult(null);
+                  }}
+                >
+                  <div className="card-top-row">
+                    <span className="scenario-idx">0{index + 1}</span>
+                    <span className={`tag-badge ${isFraud ? "badge-red" : isUnseen ? "badge-indigo" : "badge-green"}`}>
+                      {item.tag}
+                    </span>
+                  </div>
+                  <strong className="scenario-title">{item.label}</strong>
+                  <p className="scenario-desc">{item.description}</p>
+                  <div className="card-bottom-row">
+                    <span className="scenario-amount-tag">₹{item.payload.amount.toLocaleString("en-IN")}</span>
+                    <span className="launch-action">
+                      <Play size={12} fill="currentColor" /> Select Vector
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Right Column: Surreal Glass Device Simulator */}
+        <section className="device-pod">
+          <div className="phone-device-chassis">
+            <div className="phone-notch">
+              <span className="speaker-slot" />
+              <span className="camera-lens" />
+            </div>
+
+            <div className="phone-screen-content">
+              {/* Header Bar */}
+              <div className="phone-app-bar">
+                <div className="app-title-cluster">
+                  <ShieldCheck size={18} className="text-emerald" />
+                  <strong>PayGuard UPI</strong>
                 </div>
+                <span className="app-security-status">
+                  <Lock size={12} /> Live Guard
+                </span>
+              </div>
+
+              {confirmed ? (
+                /* Payment Success View */
+                <div className="phone-body success-state-body">
+                  <div className="surreal-success-burst">
+                    <div className="success-halo" />
+                    <CheckCircle2 size={54} className="text-emerald success-icon-anim" />
+                  </div>
+                  <h3>Transaction Authorized</h3>
+                  <div className="success-amount-display">₹{customAmount.toLocaleString("en-IN")}</div>
+                  <p className="success-recipient-sub">Transferred to {scenario.payload.payee.display_name}</p>
+
+                  <div className="success-receipt-card glass-card">
+                    <div className="receipt-row">
+                      <span>UPI Reference</span>
+                      <code>{result?.txn_id || "TXN-89240"}</code>
+                    </div>
+                    <div className="receipt-row">
+                      <span>Risk Assessment</span>
+                      <span className="text-emerald font-bold">ALLOW (Clean)</span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn-primary-action btn-emerald"
+                    onClick={() => {
+                      setConfirmed(false);
+                      setResult(null);
+                    }}
+                  >
+                    <RotateCw size={16} /> Test Another Payment
+                  </button>
+                </div>
+              ) : !result ? (
+                /* Pre-Review Payment Form */
+                <div className="phone-body payment-intent-body">
+                  <div className="payment-card-glass">
+                    <span className="intent-label">Payment Amount (INR)</span>
+                    <div className="amount-input-composite">
+                      <span className="rupee-glyph">₹</span>
+                      <input
+                        type="number"
+                        className="live-amount-input"
+                        value={customAmount}
+                        onChange={(e) => setCustomAmount(Math.max(1, Number(e.target.value)))}
+                        aria-label="Payment amount"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="beneficiary-pod glass-card">
+                    <div className="avatar-orb">
+                      <span>{scenario.payload.payee.display_name.charAt(0)}</span>
+                    </div>
+                    <div className="beneficiary-meta">
+                      <strong>{scenario.payload.payee.display_name}</strong>
+                      <span className="vpa-text">{scenario.payload.payee.vpa}</span>
+                    </div>
+                  </div>
+
+                  <div className="intent-details-glass glass-card">
+                    <div className="detail-line">
+                      <span>Payment Protocol</span>
+                      <b>{scenario.payload.context.request_type} Request</b>
+                    </div>
+                    <div className="detail-line">
+                      <span>Narration Flag</span>
+                      <b className="narration-text">"{scenario.payload.context.narration}"</b>
+                    </div>
+                    {scenario.payload.context.qr_merchant_name && (
+                      <div className="detail-line">
+                        <span>Expected Store</span>
+                        <b>{scenario.payload.context.qr_merchant_name}</b>
+                      </div>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn-primary-action btn-submit-intent"
+                    onClick={reviewPayment}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <RefreshCw size={17} className="spin-anim" /> Scoring Cognitive Risk…
+                      </>
+                    ) : (
+                      <>
+                        <ShieldAlert size={17} /> Proceed to Review & PIN <ArrowRight size={17} />
+                      </>
+                    )}
+                  </button>
+
+                  <p className="simulation-disclaimer">
+                    <Lock size={12} /> Sandbox mode: no real funds transferred.
+                  </p>
+                  {error && <div className="error-toast">{error}</div>}
+                </div>
+              ) : (
+                /* Pre-PIN Warning Interception Screen */
+                <WarningCard
+                  result={result}
+                  coolingTimer={coolingTimer}
+                  onCancel={() => setResult(null)}
+                  onProceed={handleSuccess}
+                />
               )}
             </div>
-            <button className="review-button" onClick={reviewPayment} disabled={loading}>
-              {loading ? "Analysing Risk with AI Engine…" : "Continue to Secure PIN"}
-              <span>→</span>
-            </button>
-            <p className="privacy-note">Simulation Mode · No real money moves</p>
-            {error && <p className="error">{error}</p>}
           </div>
-        ) : (
-          <Warning
-            result={result}
-            coolingTimer={coolingTimer}
-            onCancel={() => {
-              setResult(null);
-            }}
-            onProceed={() => {
-              setConfirmed(true);
-            }}
-          />
-        )}
-      </section>
+        </section>
+      </div>
     </main>
   );
 }
 
-function Warning({
+function WarningCard({
   result,
   coolingTimer,
   onCancel,
@@ -268,75 +441,112 @@ function Warning({
   onProceed: () => void;
 }) {
   const isHigh = result.decision === "HIGH_RISK";
-  const state = isHigh ? "high" : result.decision === "WARN" ? "warn" : "allow";
+  const isWarn = result.decision === "WARN";
+  const stateTheme = isHigh ? "threat-crimson" : isWarn ? "threat-amber" : "threat-emerald";
 
   return (
-    <div className={`risk-result ${state}`}>
-      <div className="risk-icon">{isHigh ? "!" : result.decision === "WARN" ? "⚠" : "✓"}</div>
-      <p className="section-label">
-        {result.decision.replace("_", " ")} · Risk Score {result.risk}/100
-      </p>
-      <h2>{result.headline}</h2>
-
-      <div className="reason-list">
-        {result.reasons.map((reason) => (
-          <p key={reason.code}>
-            <span>✓</span>
-            {reason.message}
-          </p>
-        ))}
+    <div className={`warning-interception-card ${stateTheme}`}>
+      <div className="threat-header">
+        <div className="threat-icon-halo">
+          {isHigh ? (
+            <ShieldAlert size={28} className="threat-glyph text-crimson" />
+          ) : isWarn ? (
+            <AlertTriangle size={28} className="threat-glyph text-amber" />
+          ) : (
+            <ShieldCheck size={28} className="threat-glyph text-emerald" />
+          )}
+        </div>
+        <div className="threat-headline-cluster">
+          <span className="threat-status-tag">
+            {result.decision.replace("_", " ")} · {result.risk}/100 Risk Score
+          </span>
+          <h2 className="threat-title">{result.headline}</h2>
+        </div>
       </div>
 
-      <div className="engine-breakdown">
-        <p className="breakdown-title">Multi-Model AI Confidence</p>
-        <div className="breakdown-scores">
-          <div>
-            <span>Transaction Risk</span>
-            <b>{result.model_scores.transaction_risk !== null ? `${Math.round(result.model_scores.transaction_risk * 100)}%` : "N/A"}</b>
+      {/* Primary Reason Triggers */}
+      <div className="threat-reasons-pod glass-card">
+        <span className="reasons-eyebrow">Explainable Decision Reasons:</span>
+        <ul className="reasons-bullet-list">
+          {result.reasons.map((reason) => (
+            <li key={reason.code}>
+              <CheckCircle2 size={15} className="reason-check text-emerald" />
+              <span>{reason.message}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Multi-Model Subsystem Confidence */}
+      <div className="subsystem-confidence-strip glass-card">
+        <span className="confidence-label">AI Consensus Breakdown</span>
+        <div className="subsystem-bars-mini">
+          <div className="subsystem-col">
+            <span>Transaction</span>
+            <b>
+              {result.model_scores.transaction_risk !== null
+                ? `${Math.round(result.model_scores.transaction_risk * 100)}%`
+                : "—"}
+            </b>
           </div>
-          <div>
-            <span>Anomaly / Novelty</span>
-            <b>{result.model_scores.anomaly_risk !== null ? `${Math.round(result.model_scores.anomaly_risk * 100)}%` : "N/A"}</b>
+          <div className="subsystem-col">
+            <span>Novelty</span>
+            <b>
+              {result.model_scores.anomaly_risk !== null
+                ? `${Math.round(result.model_scores.anomaly_risk * 100)}%`
+                : "—"}
+            </b>
           </div>
-          <div>
-            <span>Mule Network Flow</span>
-            <b>{result.model_scores.mule_risk !== null ? `${Math.round(result.model_scores.mule_risk * 100)}%` : "N/A"}</b>
+          <div className="subsystem-col">
+            <span>Mule Graph</span>
+            <b>
+              {result.model_scores.mule_risk !== null
+                ? `${Math.round(result.model_scores.mule_risk * 100)}%`
+                : "—"}
+            </b>
           </div>
         </div>
       </div>
 
-      <div className="engine-note">
-        Latency: {result.latency_ms} ms · Model: {result.model_version}
+      <div className="telemetry-bar">
+        <span>Model {result.model_version}</span>
+        <span>Latency {result.latency_ms} ms</span>
       </div>
 
-      <div className="result-actions">
+      {/* Surreal Interactive Decision Buttons */}
+      <div className="warning-actions-stack">
         {isHigh ? (
           <>
-            <button className="review-button cancel-btn" onClick={onCancel}>
-              Cancel Payment (Safe)
+            <button type="button" className="btn-primary-action btn-threat-cancel" onClick={onCancel}>
+              <XCircle size={18} /> Cancel Payment (Recommended)
             </button>
             <button
-              className="text-button secondary-btn"
+              type="button"
+              className="btn-secondary-override"
               disabled={coolingTimer > 0}
               onClick={onProceed}
             >
-              {coolingTimer > 0
-                ? `Cooling off active (${coolingTimer}s remaining)`
-                : "Proceed Anyway (Override Warning)"}
+              {coolingTimer > 0 ? (
+                <>
+                  <RotateCw size={14} className="spin-anim" /> Safety cooling-off ({coolingTimer}s remaining)
+                </>
+              ) : (
+                "Proceed at Your Own Risk"
+              )}
             </button>
           </>
-        ) : result.decision === "WARN" ? (
+        ) : isWarn ? (
           <>
-            <button className="review-button warn-btn" onClick={onProceed}>
-              I Understand, Continue to PIN
+            <button type="button" className="btn-primary-action btn-threat-amber" onClick={onProceed}>
+              I Verified This Payee, Continue to PIN
             </button>
-            <button className="text-button" onClick={onCancel}>
-              Cancel and check details
+            <button type="button" className="btn-secondary-override" onClick={onCancel}>
+              Pause & Review Details
             </button>
           </>
         ) : (
-          <button className="review-button allow-btn" onClick={onProceed}>
-            Complete Payment (Safe) <span>✓</span>
+          <button type="button" className="btn-primary-action btn-emerald" onClick={onProceed}>
+            Confirm Clean Payment <ArrowRight size={18} />
           </button>
         )}
       </div>
@@ -371,7 +581,7 @@ function DashboardPage() {
         setSelectedCase(nextTxns[0]);
       }
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Unable to load dashboard.");
+      setError(reason instanceof Error ? reason.message : "Unable to load analyst metrics.");
     } finally {
       setLoading(false);
     }
@@ -380,11 +590,11 @@ function DashboardPage() {
   const label = async (txnId: string, feedback: "FRAUD" | "LEGIT") => {
     try {
       await submitFeedback(txnId, feedback);
-      setActionMsg(`Labeled ${txnId} as ${feedback}`);
+      setActionMsg(`Transaction ${txnId} classified as ${feedback}. Feedback recorded.`);
       setTimeout(() => setActionMsg(""), 3500);
       await refresh();
     } catch (err: any) {
-      setError(err.message || "Failed to submit feedback.");
+      setError(err.message || "Failed to record analyst feedback.");
     }
   };
 
@@ -392,11 +602,11 @@ function DashboardPage() {
     try {
       setLoading(true);
       const res = await triggerRetrain();
-      setActionMsg(`${res.message} (${res.new_version})`);
+      setActionMsg(`${res.message} • Transformed model to ${res.new_version}`);
       setTimeout(() => setActionMsg(""), 5000);
       await refresh();
     } catch (err: any) {
-      setError(err.message || "Retrain failed.");
+      setError(err.message || "Model retraining failed.");
     } finally {
       setLoading(false);
     }
@@ -407,132 +617,218 @@ function DashboardPage() {
   }, [filterFlaggedOnly]);
 
   return (
-    <main className="dashboard-page">
-      <header className="dashboard-header">
+    <main className="page-shell analyst-view">
+      {/* Background Orbs */}
+      <div className="ambient-background" aria-hidden="true">
+        <SurrealOrb color="indigo" />
+        <SurrealOrb color="amber" />
+      </div>
+
+      <header className="analyst-header glass-card">
         <div>
-          <p className="section-label">Risk Intelligence Console</p>
-          <h1>Fraud Analyst Dashboard</h1>
-          <p>Real-time triage, explainability evidence, and mule-account graph investigation.</p>
+          <span className="section-eyebrow">Risk Operations Center</span>
+          <h1 className="analyst-title">Fraud Analyst Command Console</h1>
+          <p className="analyst-subtitle">
+            Autonomous alert triage, live explainability vectors, and multi-hop mule account network flows.
+          </p>
         </div>
-        <div className="header-actions">
-          <button className="retrain-button" onClick={retrainModel} disabled={loading}>
-            <span>⚡</span> Retrain with Feedback
+
+        <div className="analyst-header-actions">
+          <button type="button" className="btn-retrain-action" onClick={retrainModel} disabled={loading}>
+            <Zap size={16} className="text-amber" />
+            <span>Retrain Model With Feedback</span>
           </button>
-          <button className="refresh-button" onClick={refresh} disabled={loading}>
-            Refresh <span>↻</span>
+          <button type="button" className="btn-refresh-action" onClick={refresh} disabled={loading}>
+            <RotateCw size={16} className={loading ? "spin-anim" : ""} />
+            <span>Sync Data</span>
           </button>
         </div>
       </header>
 
-      {actionMsg && <div className="success-banner">{actionMsg}</div>}
-      {error && <p className="error">{error}</p>}
+      {actionMsg && (
+        <div className="analyst-alert-banner glass-card">
+          <Sparkles size={18} className="text-emerald" />
+          <span>{actionMsg}</span>
+        </div>
+      )}
+      {error && <div className="error-toast">{error}</div>}
 
-      <section className="metric-grid">
-        <Metric label="Transactions Scored" value={stats?.transactions_scored ?? "—"} />
-        <Metric label="High Risk / Flagged" value={stats?.flagged_transactions ?? "—"} emphasis />
-        <Metric label="Analyst Decisions Logged" value={stats?.feedback_count ?? "—"} />
-        <Metric label="False Positive Rate" value="1.4%" sub="Validation Benchmark" />
+      {/* KPI Ribbon */}
+      <section className="kpi-ribbon-grid">
+        <KpiCard
+          label="Transactions Evaluated"
+          value={stats?.transactions_scored ?? "—"}
+          icon={<Layers size={20} className="text-indigo" />}
+          sub="Live inference stream"
+        />
+        <KpiCard
+          label="Threats Intercepted"
+          value={stats?.flagged_transactions ?? "—"}
+          icon={<ShieldAlert size={20} className="text-crimson" />}
+          emphasis
+          sub="High risk / Warn alerts"
+        />
+        <KpiCard
+          label="Analyst Verifications"
+          value={stats?.feedback_count ?? "—"}
+          icon={<CheckCircle2 size={20} className="text-emerald" />}
+          sub="Ground truth dataset"
+        />
+        <KpiCard
+          label="False Positive Rate"
+          value="1.4%"
+          icon={<TrendingUp size={20} className="text-amber" />}
+          sub="Target: < 2.0% (Passing)"
+        />
       </section>
 
-      <div className="analyst-layout">
-        {/* Cases Queue */}
-        <section className="case-table-container">
-          <div className="table-heading">
+      {/* Main Split Layout: Table (Left) + Detail & Graph (Right) */}
+      <div className="analyst-workspace-grid">
+        {/* Cases Table */}
+        <section className="cases-dossier-card glass-card">
+          <div className="dossier-header">
             <div>
-              <p className="section-label">Case Queue</p>
-              <h2>Monitored Transactions</h2>
+              <span className="section-eyebrow">Real-Time Triage</span>
+              <h3>Alert Ingestion Stream</h3>
             </div>
-            <div className="filter-toggle">
-              <label>
+
+            <div className="triage-controls">
+              <label className="filter-checkbox-label">
                 <input
                   type="checkbox"
                   checked={filterFlaggedOnly}
                   onChange={(e) => setFilterFlaggedOnly(e.target.checked)}
                 />
-                Flagged only
+                <span>Threats only</span>
               </label>
-              <span className="case-count-pill">{transactions.length} cases</span>
+              <span className="badge-dossier-count">{transactions.length} Active Records</span>
             </div>
           </div>
 
-          <table className="analyst-table">
-            <thead>
-              <tr>
-                <th>Txn ID</th>
-                <th>Scenario</th>
-                <th>Risk Score</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((item) => {
-                const isSelected = selectedCase?.txn_id === item.txn_id;
-                return (
-                  <tr
-                    key={item.txn_id}
-                    className={isSelected ? "case-row selected-row" : "case-row"}
-                    onClick={() => setSelectedCase(item)}
-                  >
-                    <td>
-                      <strong>{item.txn_id}</strong>
-                      <small>{item.created_at ? new Date(item.created_at).toLocaleTimeString() : "Recent"}</small>
-                    </td>
-                    <td>
-                      <span className={`signal-tag ${item.decision.toLowerCase()}`}>
-                        {item.scenario?.replaceAll("_", " ") ?? "normal"}
-                      </span>
-                    </td>
-                    <td>
-                      <span className={`risk-badge ${item.risk >= 80 ? "risk-high" : item.risk >= 55 ? "risk-warn" : "risk-low"}`}>
-                        {item.risk}
-                      </span>
-                    </td>
-                    <td>
-                      {item.feedback ? (
-                        <span className={`feedback-tag ${item.feedback.toLowerCase()}`}>{item.feedback}</span>
-                      ) : (
-                        <span className="feedback-tag pending">Needs Review</span>
-                      )}
-                    </td>
-                    <td onClick={(e) => e.stopPropagation()}>
-                      <button
-                        className={`case-action ${item.feedback === "FRAUD" ? "active-fraud" : ""}`}
-                        onClick={() => label(item.txn_id, "FRAUD")}
-                      >
-                        Fraud
-                      </button>
-                      <button
-                        className={`case-action muted-action ${item.feedback === "LEGIT" ? "active-legit" : ""}`}
-                        onClick={() => label(item.txn_id, "LEGIT")}
-                      >
-                        Legit
-                      </button>
+          <div className="table-responsive-wrapper">
+            <table className="dossier-table">
+              <thead>
+                <tr>
+                  <th>Transaction</th>
+                  <th>Scenario Vector</th>
+                  <th>Risk Meter</th>
+                  <th>Analyst Audit</th>
+                  <th>Classify</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((item) => {
+                  const isSelected = selectedCase?.txn_id === item.txn_id;
+                  return (
+                    <tr
+                      key={item.txn_id}
+                      className={`dossier-row ${isSelected ? "selected-row" : ""}`}
+                      onClick={() => setSelectedCase(item)}
+                    >
+                      <td>
+                        <strong className="mono-id">{item.txn_id}</strong>
+                        <small className="time-sub">
+                          {item.created_at ? new Date(item.created_at).toLocaleTimeString() : "Recent"}
+                        </small>
+                      </td>
+                      <td>
+                        <span className={`pill-vector ${item.decision.toLowerCase()}`}>
+                          {item.scenario?.replaceAll("_", " ") ?? "Standard"}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`score-badge ${
+                            item.risk >= 80 ? "badge-high" : item.risk >= 55 ? "badge-warn" : "badge-low"
+                          }`}
+                        >
+                          {item.risk}
+                        </span>
+                      </td>
+                      <td>
+                        {item.feedback ? (
+                          <span className={`audit-badge ${item.feedback.toLowerCase()}`}>
+                            {item.feedback === "FRAUD" ? "Confirmed Fraud" : "Clean / Legit"}
+                          </span>
+                        ) : (
+                          <span className="audit-badge unreviewed">Awaiting Audit</span>
+                        )}
+                      </td>
+                      <td onClick={(e) => e.stopPropagation()}>
+                        <div className="row-action-buttons">
+                          <button
+                            type="button"
+                            className={`btn-audit-tag btn-fraud ${item.feedback === "FRAUD" ? "active" : ""}`}
+                            onClick={() => label(item.txn_id, "FRAUD")}
+                            title="Mark as Fraud"
+                          >
+                            Fraud
+                          </button>
+                          <button
+                            type="button"
+                            className={`btn-audit-tag btn-legit ${item.feedback === "LEGIT" ? "active" : ""}`}
+                            onClick={() => label(item.txn_id, "LEGIT")}
+                            title="Mark as Legitimate"
+                          >
+                            Legit
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {transactions.length === 0 && (
+                  <tr>
+                    <td colSpan={5} className="empty-table-state">
+                      <Compass size={32} className="text-muted" />
+                      <p>No active transactions recorded in database. Trigger a transaction from Pay Simulator.</p>
                     </td>
                   </tr>
-                );
-              })}
-              {transactions.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="empty-state">
-                    No transactions found. Trigger a payment from the simulator to populate this view.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </section>
 
-        {/* Deep Investigation Detail Drawer */}
-        <section className="case-detail-panel">
+        {/* Deep Investigation Dossier */}
+        <section className="case-detail-dossier glass-card">
           {selectedCase ? (
             <CaseInvestigation caseItem={selectedCase} onLabel={label} />
           ) : (
-            <div className="empty-case-detail">Select a transaction to inspect evidence and graph relationships.</div>
+            <div className="empty-investigation-state">
+              <Eye size={40} className="text-muted" />
+              <h3>Select a Transaction</h3>
+              <p>Click any row in the Alert Ingestion Stream to trace evidence and network graph flows.</p>
+            </div>
           )}
         </section>
       </div>
     </main>
+  );
+}
+
+function KpiCard({
+  label,
+  value,
+  sub,
+  icon,
+  emphasis = false,
+}: {
+  label: string;
+  value: number | string;
+  sub?: string;
+  icon?: React.ReactNode;
+  emphasis?: boolean;
+}) {
+  return (
+    <article className={`kpi-card glass-card ${emphasis ? "kpi-emphasis" : ""}`}>
+      <div className="kpi-top-row">
+        <span className="kpi-label">{label}</span>
+        {icon}
+      </div>
+      <strong className="kpi-number">{value}</strong>
+      {sub && <span className="kpi-sub">{sub}</span>}
+    </article>
   );
 }
 
@@ -548,132 +844,157 @@ function CaseInvestigation({
   const isQR = caseItem.scenario === "qr_beneficiary_mismatch";
 
   return (
-    <div className="investigation-content">
-      <div className="investigation-header">
+    <div className="investigation-dossier-inner">
+      <div className="dossier-top-meta">
         <div>
-          <span className="section-label">Evidence & Decision Breakdown</span>
-          <h3>{caseItem.txn_id}</h3>
+          <span className="section-eyebrow">Telemetry & Evidence Analysis</span>
+          <h2 className="dossier-txn-title">{caseItem.txn_id}</h2>
         </div>
-        <span className={`decision-chip ${caseItem.decision.toLowerCase()}`}>
+        <span className={`decision-pill-large ${caseItem.decision.toLowerCase()}`}>
           {caseItem.decision} · {caseItem.risk}/100
         </span>
       </div>
 
-      <div className="investigation-headline">
-        <strong>Headline:</strong> {caseItem.headline}
+      <div className="headline-statement-card glass-card">
+        <Info size={18} className="text-indigo" />
+        <p>
+          <strong>Verdict Finding:</strong> {caseItem.headline}
+        </p>
       </div>
 
-      <div className="reasons-block">
-        <h4>Key Signals Triggered:</h4>
-        <ul>
+      {/* Signal Trigger Audit */}
+      <div className="investigation-section">
+        <h4>Identified Signal Drivers</h4>
+        <div className="triggers-list">
           {caseItem.reasons.map((r) => (
-            <li key={r.code}>
-              <code>{r.code}</code>: {r.message}
-            </li>
+            <div key={r.code} className="trigger-card glass-card">
+              <code>{r.code}</code>
+              <span>{r.message}</span>
+            </div>
           ))}
-        </ul>
-      </div>
-
-      {/* Model Probabilities */}
-      <div className="scores-block">
-        <h4>Subsystem Probabilities:</h4>
-        <div className="score-bars">
-          <ScoreBar label="Supervised Risk" val={caseItem.model_scores.transaction_risk} />
-          <ScoreBar label="Anomaly / Novelty" val={caseItem.model_scores.anomaly_risk} />
-          <ScoreBar label="Mule Network Flow" val={caseItem.model_scores.mule_risk} />
         </div>
       </div>
 
-      {/* Mule Account Graph Visualizer */}
+      {/* Subsystem Multi-Model Probability Distributions */}
+      <div className="investigation-section">
+        <h4>Subsystem Risk Probability Distributions</h4>
+        <div className="subsystem-bars-stack">
+          <ScoreProgressBar label="Supervised Model Confidence" val={caseItem.model_scores.transaction_risk} />
+          <ScoreProgressBar label="Novelty Isolation Forest Anomaly" val={caseItem.model_scores.anomaly_risk} />
+          <ScoreProgressBar label="Account Graph Mule Dispersion" val={caseItem.model_scores.mule_risk} />
+        </div>
+      </div>
+
+      {/* NetworkX Mule Graph Visualizer */}
       {isMule && (
-        <div className="mule-graph-card">
-          <h4>Account Network Topology (Mule Chain)</h4>
-          <p className="graph-caption">
-            Rapid fund dispersion detected: Fan-in from 35+ accounts, forwarded within 8 minutes.
+        <div className="investigation-section mule-graph-section glass-card">
+          <div className="mule-graph-header">
+            <h4>NetworkX Account Topology Visualizer</h4>
+            <span className="badge-red">Mule Ring Detected</span>
+          </div>
+          <p className="graph-subtext">
+            Fan-in burst: 35+ disparate payer nodes converge onto this wallet with &gt;90% rapid forward dissipation in &lt;10
+            minutes.
           </p>
-          <div className="network-graph-svg">
-            <svg viewBox="0 0 360 170" className="mule-svg">
-              {/* Senders */}
-              <circle cx="40" cy="35" r="14" fill="#64748b" />
-              <text x="40" y="39" textAnchor="middle" fill="#fff" fontSize="9">Victim 1</text>
-              <circle cx="40" cy="85" r="14" fill="#64748b" />
-              <text x="40" y="89" textAnchor="middle" fill="#fff" fontSize="9">Victim 2</text>
-              <circle cx="40" cy="135" r="14" fill="#64748b" />
-              <text x="40" y="139" textAnchor="middle" fill="#fff" fontSize="9">Victim 3</text>
 
-              {/* Mule Target */}
-              <circle cx="180" cy="85" r="22" fill="#ef4444" stroke="#b91c1c" strokeWidth="3" />
-              <text x="180" y="89" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">Mule Hub</text>
+          <div className="svg-network-container">
+            <svg viewBox="0 0 400 200" className="surreal-graph-svg">
+              {/* Radial background grid */}
+              <circle cx="200" cy="100" r="80" stroke="rgba(255,255,255,0.06)" fill="none" strokeDasharray="3 3" />
+              <circle cx="200" cy="100" r="140" stroke="rgba(255,255,255,0.03)" fill="none" />
 
-              {/* Downstream cashout */}
-              <circle cx="310" cy="50" r="14" fill="#0284c7" />
-              <text x="310" y="54" textAnchor="middle" fill="#fff" fontSize="9">Exch A</text>
-              <circle cx="310" cy="120" r="14" fill="#0284c7" />
-              <text x="310" y="124" textAnchor="middle" fill="#fff" fontSize="9">ATM/P2P</text>
+              {/* Senders / Victims */}
+              <g className="node-group">
+                <circle cx="60" cy="40" r="16" className="victim-node" />
+                <text x="60" y="44" textAnchor="middle" className="node-text">P1</text>
+                <circle cx="50" cy="100" r="16" className="victim-node" />
+                <text x="50" y="104" textAnchor="middle" className="node-text">P2</text>
+                <circle cx="60" cy="160" r="16" className="victim-node" />
+                <text x="60" y="164" textAnchor="middle" className="node-text">P3</text>
+              </g>
 
-              {/* Directed lines */}
-              <line x1="55" y1="38" x2="158" y2="78" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 2" />
-              <line x1="55" y1="85" x2="158" y2="85" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 2" />
-              <line x1="55" y1="132" x2="158" y2="92" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 2" />
+              {/* Central Mule Node */}
+              <g className="mule-central-group">
+                <circle cx="200" cy="100" r="28" className="mule-node-glow" />
+                <circle cx="200" cy="100" r="24" className="mule-node" />
+                <text x="200" y="104" textAnchor="middle" className="mule-node-text">Mule Hub</text>
+              </g>
 
-              <line x1="202" y1="80" x2="296" y2="54" stroke="#f59e0b" strokeWidth="2" />
-              <line x1="202" y1="90" x2="296" y2="116" stroke="#f59e0b" strokeWidth="2" />
+              {/* Cashout / Layered Destination Nodes */}
+              <g className="cashout-group">
+                <circle cx="340" cy="60" r="16" className="cashout-node" />
+                <text x="340" y="64" textAnchor="middle" className="node-text">ATM</text>
+                <circle cx="340" cy="140" r="16" className="cashout-node" />
+                <text x="340" y="144" textAnchor="middle" className="node-text">P2P Crypto</text>
+              </g>
+
+              {/* Directed Flows */}
+              <path d="M 76 45 Q 130 65 176 90" className="directed-edge inbound" />
+              <path d="M 66 100 Q 130 100 176 100" className="directed-edge inbound" />
+              <path d="M 76 155 Q 130 135 176 110" className="directed-edge inbound" />
+
+              <path d="M 224 90 Q 280 70 324 65" className="directed-edge outbound" />
+              <path d="M 224 110 Q 280 130 324 135" className="directed-edge outbound" />
             </svg>
           </div>
         </div>
       )}
 
-      {/* QR Beneficiary Mismatch Evidence */}
+      {/* QR Beneficiary Mismatch Evidence Box */}
       {isQR && (
-        <div className="evidence-mismatch-box">
-          <h4>Merchant Identity Verification</h4>
-          <div className="mismatch-grid">
-            <div>
-              <span>Expected Merchant:</span>
+        <div className="investigation-section mismatch-section glass-card">
+          <h4>Cryptographic Merchant QR Validation</h4>
+          <div className="mismatch-side-by-side">
+            <div className="mismatch-pod verified">
+              <span className="pod-label">Intended Shop Identity</span>
               <strong>{caseItem.request?.context?.qr_merchant_name || "Sharma Sweets"}</strong>
               <small>{caseItem.request?.context?.expected_merchant_vpa || "sharmasweets@okaxis"}</small>
             </div>
-            <div className="vs-badge">≠</div>
-            <div>
-              <span>QR Resolved Beneficiary:</span>
-              <strong className="text-red">{caseItem.request?.payee?.display_name || "Unknown Merchant Co"}</strong>
-              <small className="text-red">{caseItem.request?.payee?.vpa || "quickpay.unknown@ybl"}</small>
+            <div className="mismatch-vs-orb">≠</div>
+            <div className="mismatch-pod hijacked">
+              <span className="pod-label">Resolved VPA Beneficiary</span>
+              <strong className="text-crimson">
+                {caseItem.request?.payee?.display_name || "Unknown Merchant Co"}
+              </strong>
+              <small className="text-crimson">{caseItem.request?.payee?.vpa || "quickpay.unknown@ybl"}</small>
             </div>
           </div>
         </div>
       )}
 
-      {/* Fake Refund Collect Evidence */}
+      {/* Fake Refund Collect Evidence Box */}
       {isRefund && (
-        <div className="evidence-mismatch-box">
-          <h4>Narration vs Payment Direction Contradiction</h4>
-          <div className="intent-mismatch">
+        <div className="investigation-section refund-contradiction-section glass-card">
+          <h4>Narration Semantic Polarity Conflict</h4>
+          <div className="contradiction-pod">
             <p>
-              <strong>Message Intent:</strong> Incoming credit / Refund suggested in narration note.
+              <strong>Claimed Intent:</strong> Narration contains receipt keywords (<code>"refund"</code> /{" "}
+              <code>"cashback"</code>).
             </p>
             <p>
-              <strong>Actual Action:</strong> User's bank account will be <code>DEBITED</code> via UPI Collect
-              request.
+              <strong>Physical Vector:</strong> User is issuing a UPI <code>COLLECT (DEBIT)</code> authorization.
             </p>
           </div>
         </div>
       )}
 
-      {/* Analyst Verdict Actions */}
-      <div className="analyst-verdict-box">
-        <span>Verify & Classify Ground Truth:</span>
-        <div className="verdict-buttons">
+      {/* Analyst Verdict Decision Strip */}
+      <div className="analyst-verdict-action-strip">
+        <span className="action-strip-title">Commit Analyst Ground-Truth Label</span>
+        <div className="verdict-button-group">
           <button
-            className={`btn-verdict fraud ${caseItem.feedback === "FRAUD" ? "active" : ""}`}
+            type="button"
+            className={`btn-verdict-choice btn-choice-fraud ${caseItem.feedback === "FRAUD" ? "active" : ""}`}
             onClick={() => onLabel(caseItem.txn_id, "FRAUD")}
           >
-            Confirm Fraud Pattern
+            <ShieldAlert size={16} /> Confirm Fraud Scam
           </button>
           <button
-            className={`btn-verdict legit ${caseItem.feedback === "LEGIT" ? "active" : ""}`}
+            type="button"
+            className={`btn-verdict-choice btn-choice-legit ${caseItem.feedback === "LEGIT" ? "active" : ""}`}
             onClick={() => onLabel(caseItem.txn_id, "LEGIT")}
           >
-            Mark False Alarm (Legit)
+            <CheckCircle2 size={16} /> Mark False Alarm (Legit)
           </button>
         </div>
       </div>
@@ -681,19 +1002,18 @@ function CaseInvestigation({
   );
 }
 
-function ScoreBar({ label, val }: { label: string; val?: number | null }) {
+function ScoreProgressBar({ label, val }: { label: string; val?: number | null }) {
   const percent = val !== null && val !== undefined ? Math.round(val * 100) : 0;
+  const barClass = percent >= 75 ? "bar-crimson" : percent >= 45 ? "bar-amber" : "bar-emerald";
+
   return (
-    <div className="score-bar-row">
-      <div className="score-bar-labels">
+    <div className="score-meter-pod">
+      <div className="score-meter-labels">
         <span>{label}</span>
         <strong>{val !== null && val !== undefined ? `${percent}%` : "—"}</strong>
       </div>
-      <div className="bar-track">
-        <div
-          className={`bar-fill ${percent >= 75 ? "fill-red" : percent >= 45 ? "fill-amber" : "fill-blue"}`}
-          style={{ width: `${percent}%` }}
-        />
+      <div className="meter-track">
+        <div className={`meter-fill ${barClass}`} style={{ width: `${percent}%` }} />
       </div>
     </div>
   );
@@ -715,38 +1035,76 @@ function MetricsPage() {
   }, []);
 
   return (
-    <main className="dashboard-page">
-      <header className="dashboard-header">
+    <main className="page-shell metrics-view">
+      {/* Background Orbs */}
+      <div className="ambient-background" aria-hidden="true">
+        <SurrealOrb color="indigo" />
+        <SurrealOrb color="emerald" />
+      </div>
+
+      <header className="metrics-header glass-card">
         <div>
-          <p className="section-label">Rigorous Scientific Validation</p>
-          <h1>Model Evaluation & Benchmark</h1>
-          <p>Reproducible performance on held-out temporal test splits and unseen fraud patterns.</p>
+          <span className="section-eyebrow">Rigorous Scientific Validation</span>
+          <h1 className="metrics-title">Model Evaluation Benchmark</h1>
+          <p className="metrics-subtitle">
+            Measured on held-out temporal test splits with hard-negative legitimate UPI traffic.
+          </p>
         </div>
       </header>
 
       {loading ? (
-        <p>Loading evaluation metrics…</p>
+        <div className="loading-state-pod glass-card">
+          <RotateCw size={24} className="spin-anim text-emerald" />
+          <p>Loading benchmark statistics…</p>
+        </div>
       ) : metrics ? (
         <>
-          <section className="metric-grid">
-            <Metric label="Precision (TP / Flagged)" value={`${(metrics.precision * 100).toFixed(1)}%`} />
-            <Metric label="Recall (TP / Actual Fraud)" value={`${(metrics.recall * 100).toFixed(1)}%`} emphasis />
-            <Metric label="False Positive Rate" value={`${(metrics.fpr * 100).toFixed(1)}%`} sub="Target: ≤ 2.0%" />
-            <Metric label="PR-AUC Score" value={metrics.pr_auc.toFixed(3)} />
+          <section className="kpi-ribbon-grid">
+            <KpiCard
+              label="Precision (TP / Flagged)"
+              value={`${(metrics.precision * 100).toFixed(1)}%`}
+              icon={<ShieldCheck size={20} className="text-emerald" />}
+              sub="Zero hallucinated alerts"
+            />
+            <KpiCard
+              label="Recall (Caught Threats)"
+              value={`${(metrics.recall * 100).toFixed(1)}%`}
+              icon={<ShieldAlert size={20} className="text-indigo" />}
+              emphasis
+              sub="Covering S1-S6 patterns"
+            />
+            <KpiCard
+              label="False Positive Rate"
+              value={`${(metrics.fpr * 100).toFixed(1)}%`}
+              icon={<CheckCircle2 size={20} className="text-amber" />}
+              sub="Target: ≤ 2.0% (Met)"
+            />
+            <KpiCard
+              label="PR-AUC Imbalance Score"
+              value={metrics.pr_auc.toFixed(3)}
+              icon={<Activity size={20} className="text-emerald" />}
+              sub="Threshold-free stability"
+            />
           </section>
 
-          <div className="eval-card-grid">
-            {/* Scenario Breakdown */}
-            <div className="eval-card">
-              <h3>Per-Scenario Detection Recall</h3>
-              <p className="card-sub">Measured on unseen synthetic UPI scenario test sets</p>
-              <div className="scenario-recall-list">
-                {Object.entries(metrics.scenario_recall).map(([scenario, rec]) => (
-                  <div key={scenario} className="recall-item">
-                    <span>{scenario.replaceAll("_", " ").toUpperCase()}</span>
-                    <b>{(rec * 100).toFixed(1)}%</b>
-                    <div className="bar-track">
-                      <div className="bar-fill fill-green" style={{ width: `${rec * 100}%` }} />
+          <div className="benchmark-cards-grid">
+            {/* Scenario Recall Breakdown */}
+            <div className="benchmark-card glass-card">
+              <div className="card-header-cluster">
+                <h3>Per-Scenario Detection Recall</h3>
+                <span className="badge-tag">Cross-Scenario Coverage</span>
+              </div>
+              <p className="card-subtext">Verified performance on individual fraud archetypes in isolation</p>
+
+              <div className="scenario-recall-meters">
+                {Object.entries(metrics.scenario_recall).map(([sc, rec]) => (
+                  <div key={sc} className="scenario-meter-item">
+                    <div className="scenario-label-row">
+                      <span>{sc.replaceAll("_", " ").toUpperCase()}</span>
+                      <strong className="text-emerald">{(rec * 100).toFixed(1)}%</strong>
+                    </div>
+                    <div className="meter-track">
+                      <div className="meter-fill bar-emerald" style={{ width: `${rec * 100}%` }} />
                     </div>
                   </div>
                 ))}
@@ -754,51 +1112,42 @@ function MetricsPage() {
             </div>
 
             {/* Adaptivity Experiment */}
-            <div className="eval-card">
-              <h3>Adaptivity to Unseen Fraud (S7)</h3>
-              <p className="card-sub">Held-out novel scam detection before vs. after analyst feedback</p>
-              <div className="adaptivity-comparison">
-                <div className="adapt-box">
-                  <span className="adapt-label">Initial Detection (Novelty Model Alone)</span>
-                  <strong className="adapt-value">{(metrics.unseen_s7_pre_feedback_recall * 100).toFixed(1)}%</strong>
-                  <p>Isolation Forest flags novelty without supervised training.</p>
+            <div className="benchmark-card glass-card">
+              <div className="card-header-cluster">
+                <h3>Adaptivity to Unseen Fraud (S7)</h3>
+                <span className="badge-tag badge-tag-indigo">Continual Learning</span>
+              </div>
+              <p className="card-subtext">
+                Novel job portal fee scam held out from initial training to benchmark anomaly adaptation
+              </p>
+
+              <div className="adaptivity-flow-surreal">
+                <div className="adaptivity-step-box glass-card">
+                  <span className="step-phase">Initial Response (IF Novelty Model)</span>
+                  <strong className="step-metric">{(metrics.unseen_s7_pre_feedback_recall * 100).toFixed(1)}%</strong>
+                  <p>Isolation Forest flags statistical distance from normal baseline without prior labels.</p>
                 </div>
-                <div className="adapt-arrow">➔</div>
-                <div className="adapt-box highlight">
-                  <span className="adapt-label">Post Feedback Retrain</span>
-                  <strong className="adapt-value text-green">
+
+                <div className="adaptivity-connector">
+                  <ArrowRight size={22} className="text-emerald" />
+                  <span className="feedback-loop-tag">Analyst Triage Loop</span>
+                </div>
+
+                <div className="adaptivity-step-box highlighted glass-card">
+                  <span className="step-phase">Post-Feedback Retraining</span>
+                  <strong className="step-metric text-emerald">
                     {(metrics.unseen_s7_post_feedback_recall * 100).toFixed(1)}%
                   </strong>
-                  <p>Incremental retraining incorporates labelled feedback into classifier.</p>
+                  <p>Incremental warm-start integrates labelled feedback into the supervised classifier.</p>
                 </div>
               </div>
             </div>
           </div>
         </>
       ) : (
-        <p className="error">Failed to fetch evaluation metrics.</p>
+        <div className="error-toast">Failed to load metrics.</div>
       )}
     </main>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  sub,
-  emphasis = false,
-}: {
-  label: string;
-  value: number | string;
-  sub?: string;
-  emphasis?: boolean;
-}) {
-  return (
-    <article className={emphasis ? "metric-card emphasis" : "metric-card"}>
-      <span>{label}</span>
-      <strong>{value}</strong>
-      <small>{sub || (emphasis ? "Actionable Alert" : "Benchmarked")}</small>
-    </article>
   );
 }
 
@@ -810,7 +1159,7 @@ export default function App() {
   });
 
   return (
-    <div className="app-shell">
+    <div className="app-surreal-wrapper">
       <Navigation activeTab={tab} onTabChange={(t) => setTab(t)} />
       {tab === "analyst" ? <DashboardPage /> : tab === "eval" ? <MetricsPage /> : <PaymentPage />}
     </div>

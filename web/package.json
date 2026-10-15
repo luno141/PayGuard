@@ -9,10 +9,13 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.57.0",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "typescript": "latest",
