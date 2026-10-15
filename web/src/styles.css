@@ -2736,4 +2736,180 @@ h1, h2, h3, h4, p {
   color: var(--ink-heading);
 }
 
+/* Wireshark-Style IP Packet Handshake Inspector */
+.packet-view-selector-strip {
+  display: flex;
+  gap: 8px;
+  padding: 8px 20px;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.btn-packet-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--rounded-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mute);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-packet-tab:hover {
+  color: var(--ink-heading);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-packet-tab.active {
+  background: #ffffff;
+  color: var(--ink-heading);
+  border-color: var(--hairline);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.packet-handshake-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.handshake-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 320px;
+}
+
+.handshake-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.handshake-table th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--hairline);
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--mute);
+  font-size: 10px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.handshake-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  white-space: nowrap;
+}
+
+.pkt-row {
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.pkt-row:hover {
+  background: #f8fafc;
+}
+
+.pkt-row.selected {
+  background: #e0f2fe !important;
+}
+
+.pkt-row.pkt-syn {
+  background: #f0fdf4;
+}
+
+.pkt-row.pkt-ack {
+  background: #f8fafc;
+}
+
+.pkt-row.pkt-tls {
+  background: #faf5ff;
+}
+
+.pkt-row.pkt-post {
+  background: #fffbeb;
+}
+
+.pkt-row.pkt-block {
+  background: #fef2f2;
+  font-weight: 600;
+}
+
+.proto-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.proto-tcp {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.proto-tls13 {
+  background: #ede9fe;
+  color: #6b21a8;
+}
+
+.proto-http2 {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.proto-iso8583 {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.flag-tag {
+  background: #e2e8f0;
+  color: #334155;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 9px;
+  margin-right: 6px;
+}
+
+.info-cell {
+  display: flex;
+  align-items: center;
+}
+
+.packet-detail-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--hairline);
+  background: #f8fafc;
+}
+
+.detail-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-heading);
+  margin-bottom: 4px;
+}
+
+.detail-description {
+  margin: 0;
+  font-size: 11px;
+  color: var(--mute);
+  line-height: 1.4;
+}
+
+
 
