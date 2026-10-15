@@ -58,23 +58,12 @@ function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange
             <button
               type="button"
               role="tab"
-              aria-selected={activeTab === "pay"}
-              className={`nav-tab-pill ${activeTab === "pay" ? "active" : ""}`}
-              onClick={() => onTabChange("pay")}
+              aria-selected={activeTab === "dashboard"}
+              className={`nav-tab-pill ${activeTab === "dashboard" ? "active" : ""}`}
+              onClick={() => onTabChange("dashboard")}
             >
-              <Smartphone size={14} aria-hidden="true" />
-              <span>Payment Simulator</span>
-            </button>
-
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeTab === "analyst"}
-              className={`nav-tab-pill ${activeTab === "analyst" ? "active" : ""}`}
-              onClick={() => onTabChange("analyst")}
-            >
-              <Activity size={14} aria-hidden="true" />
-              <span>Analyst Console</span>
+              <Layers size={14} aria-hidden="true" />
+              <span>Live Dashboard</span>
             </button>
 
             <button
@@ -103,7 +92,7 @@ function Navigation({ activeTab, onTabChange }: { activeTab: string; onTabChange
    1. CONSUMER PAYMENT SIMULATOR & PRE-CONFIRMATION WARNING
    ========================================================================= */
 
-function PaymentPage() {
+function PaymentPage({ embedded = false }: { embedded?: boolean }) {
   const scenarioList = demos();
   const [scenario, setScenario] = useState<DemoScenario>(scenarioList[0]);
   const [result, setResult] = useState<ScoreResponse | null>(null);
@@ -166,7 +155,7 @@ function PaymentPage() {
   }
 
   return (
-    <main id="main-content" className="page-shell payment-view">
+    <main id={embedded ? undefined : "main-content"} className={embedded ? "payment-embedded" : "page-shell payment-view"}>
       <div className="payment-grid-layout">
         {/* Left Column: Hero Narrative */}
         <section className="hero-narrative">
@@ -633,7 +622,7 @@ function WarningCard({
    2. ANALYST CONSOLE & GRAPH MULE INVESTIGATION
    ========================================================================= */
 
-function DashboardPage() {
+function DashboardPage({ embedded = false }: { embedded?: boolean }) {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [transactions, setTransactions] = useState<ScoreResponse[]>([]);
   const [filterFlaggedOnly, setFilterFlaggedOnly] = useState(true);
@@ -692,7 +681,7 @@ function DashboardPage() {
   }, [filterFlaggedOnly]);
 
   return (
-    <main id="main-content" className="page-shell analyst-view">
+    <main id={embedded ? undefined : "main-content"} className={embedded ? "analyst-embedded" : "page-shell analyst-view"}>
       <header className="analyst-header corp-card">
         <div>
           <span className="mono-eyebrow">Risk Operations</span>
@@ -1224,17 +1213,51 @@ function MetricsPage() {
   );
 }
 
+/* =========================================================================
+   SPLIT DASHBOARD — Simulator left, Analyst Console right
+   ========================================================================= */
+
+function SplitDashboard() {
+  return (
+    <div id="main-content" className="split-dashboard-shell">
+      {/* Top bar: section labels */}
+      <div className="split-header-bar">
+        <div className="split-panel-label">
+          <Smartphone size={14} className="text-cyan" aria-hidden="true" />
+          <span>Payment Simulator</span>
+          <span className="split-label-sub">Consumer UPI fraud interception</span>
+        </div>
+        <div className="split-divider-vertical" aria-hidden="true" />
+        <div className="split-panel-label">
+          <Activity size={14} className="text-cyan" aria-hidden="true" />
+          <span>Analyst Console</span>
+          <span className="split-label-sub">Risk operations &amp; alert triage</span>
+        </div>
+      </div>
+
+      {/* Main split pane */}
+      <div className="split-pane-layout">
+        <div className="split-left-pane">
+          <PaymentPage embedded />
+        </div>
+        <div className="split-right-pane">
+          <DashboardPage embedded />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState<string>(() => {
-    if (window.location.pathname === "/analyst") return "analyst";
     if (window.location.pathname === "/metrics") return "eval";
-    return "pay";
+    return "dashboard";
   });
 
   return (
     <div className="app-corp-shell">
       <Navigation activeTab={tab} onTabChange={(t) => setTab(t)} />
-      {tab === "analyst" ? <DashboardPage /> : tab === "eval" ? <MetricsPage /> : <PaymentPage />}
+      {tab === "eval" ? <MetricsPage /> : <SplitDashboard />}
     </div>
   );
 }

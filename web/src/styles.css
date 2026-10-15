@@ -224,6 +224,127 @@ h1, h2, h3, h4, p {
   padding: 32px 24px 64px;
 }
 
+/* =========================================================================
+   Split Dashboard — Two-Pane Side-by-Side Layout
+   ========================================================================= */
+
+.split-dashboard-shell {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* full viewport minus nav */
+  overflow: hidden;
+}
+
+/* Thin split section header bar */
+.split-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--canvas-elevated);
+  flex-shrink: 0;
+}
+
+.split-panel-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-heading);
+  letter-spacing: -0.2px;
+}
+
+.split-panel-label:first-child {
+  border-right: 1px solid var(--hairline);
+}
+
+.split-label-sub {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--mute);
+  margin-left: 4px;
+}
+
+.split-divider-vertical {
+  width: 1px;
+  height: 32px;
+  background: var(--hairline);
+  flex-shrink: 0;
+}
+
+/* Two-column split pane */
+.split-pane-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.split-left-pane {
+  border-right: 2px solid var(--hairline);
+  overflow-y: auto;
+  background: var(--canvas);
+}
+
+.split-right-pane {
+  overflow-y: auto;
+  background: var(--canvas-subtle);
+}
+
+/* Embedded variants — no outer page-shell padding, fills the pane */
+.payment-embedded {
+  padding: 24px;
+}
+
+.analyst-embedded {
+  padding: 20px 24px 40px;
+}
+
+/* Inside embedded payment: collapse 3-col to 2-col since space is halved */
+.payment-embedded .payment-grid-layout {
+  grid-template-columns: 1fr 340px;
+}
+
+.payment-embedded .hero-narrative {
+  grid-column: span 2;
+}
+
+.payment-embedded .enterprise-capability-section {
+  margin-top: 32px;
+  padding-top: 24px;
+}
+
+.payment-embedded .enterprise-pillars-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Analyst embedded: compress spacing */
+.analyst-embedded .analyst-workspace-grid {
+  gap: 16px;
+}
+
+.analyst-embedded .kpi-ribbon-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.analyst-embedded .kpi-card {
+  padding: 14px 16px;
+}
+
+.analyst-embedded .analyst-header {
+  padding: 16px 20px;
+}
+
+.analyst-embedded .analyst-title {
+  font-size: 20px;
+}
+
+
 /* Fintech Corporate Card (Crisp Hairline + Subtle Shadow) */
 .corp-card {
   background: #ffffff;
