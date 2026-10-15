@@ -25,6 +25,7 @@ store = EventStore(Path("data/upiguard.db"))
 
 
 @app.get("/health")
+@app.get("/api/health")
 def health() -> dict[str, Any]:
     from ml.serving import _get_predictor
     predictor = _get_predictor()
@@ -44,6 +45,7 @@ def health() -> dict[str, Any]:
 
 
 @app.post("/score", response_model=ScoreResponse)
+@app.post("/api/score", response_model=ScoreResponse)
 def score(request: ScoreRequest) -> ScoreResponse:
     started = perf_counter()
     model_result = score_models(request.model_dump(mode="json"))
@@ -56,6 +58,7 @@ def score(request: ScoreRequest) -> ScoreResponse:
 
 
 @app.post("/feedback", response_model=FeedbackResponse)
+@app.post("/api/feedback", response_model=FeedbackResponse)
 def feedback(request: FeedbackRequest) -> FeedbackResponse:
     stored = store.save_feedback(request.txn_id, request.label.value)
     if not stored:
@@ -64,16 +67,19 @@ def feedback(request: FeedbackRequest) -> FeedbackResponse:
 
 
 @app.get("/stats")
+@app.get("/api/stats")
 def stats() -> dict[str, int]:
     return store.stats()
 
 
 @app.get("/transactions")
+@app.get("/api/transactions")
 def transactions(flagged: bool = Query(default=False)) -> list[dict[str, object]]:
     return store.transactions(flagged_only=flagged)
 
 
 @app.get("/metrics")
+@app.get("/api/metrics")
 def metrics() -> dict[str, Any]:
     return {
         "precision": 0.942,
@@ -97,6 +103,7 @@ def metrics() -> dict[str, Any]:
 
 
 @app.post("/retrain")
+@app.post("/api/retrain")
 def retrain() -> dict[str, Any]:
     # Simulate retraining with collected feedback labels
     stats = store.stats()

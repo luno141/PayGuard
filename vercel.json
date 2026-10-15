@@ -1,0 +1,93 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "fastapi"
+    },
+    "web": {
+      "root": "web",
+      "framework": "vite"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/health",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/score",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/stats",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/transactions(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/feedback",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/metrics(.*)",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/retrain",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/docs",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/openapi.json",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/analyst/:path*",
+      "destination": {
+        "service": "web"
+      }
+    },
+    {
+      "source": "/analyst",
+      "destination": {
+        "service": "web"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
+    }
+  ]
+}
