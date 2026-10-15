@@ -1,0 +1,6 @@
+{
+  "rf_threshold": 0.3612968703528944,
+  "lgbm_threshold": 0.2856653257694696,
+  "isolation_forest_threshold": 0.06203055708723394,
+  "graph_logreg_threshold": 0.9314414473885977
+}

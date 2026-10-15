@@ -1,0 +1,19 @@
+[
+  "amount_inr",
+  "log_amount",
+  "balance_drain_ratio",
+  "orig_drained_to_zero",
+  "dest_zero_start",
+  "is_beneficiary_mismatch",
+  "is_new_payee",
+  "payee_txn_count_30d",
+  "zero_history_flag",
+  "device_risk_signal",
+  "has_refund_keyword",
+  "has_action_keyword",
+  "message_length",
+  "drain_and_new_payee",
+  "drain_and_device_risk",
+  "mismatch_new_payee",
+  "device_risk_new_payee"
+]
