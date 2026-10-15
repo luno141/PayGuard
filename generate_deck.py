@@ -453,7 +453,7 @@ p1.font.bold = True
 p1.font.color.rgb = TEXT_WHITE
 
 p2 = tf.add_paragraph()
-p2.text = "Team Billauta Gang  ·  Project ID: A132  ·  PayGuard"
+p2.text = "Team Billauta Gang  ·  Team ID: A132  ·  PayGuard"
 p2.font.size = Pt(20)
 p2.font.color.rgb = PRIMARY_BLUE
 p2.space_before = Pt(6)
