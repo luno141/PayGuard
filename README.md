@@ -1,4 +1,4 @@
-# PayGuard: Detection of Creative Payment Frauds (CC6-AI03)
+# PayGuard: Detection of Creative Payment Frauds (CC6-AI02)
 
 Real-time, explainable fraud prevention for UPI-style payments. It scores a transaction **together with its payment context** (collect request, QR, link, narration) and **behaviour** (device, call/screen-share signals), and warns the user *before* they pay.
 
